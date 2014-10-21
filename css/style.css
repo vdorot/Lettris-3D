@@ -1,0 +1,28 @@
+body, html{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+#wrapper {
+    width: 80%;
+    height: 90%;
+    margin-left: auto;
+    margin-right: auto;  
+    position: relative;  
+}
+
+#canvas {
+    width: 100%;
+    height: 90%;
+    position: absolute;
+    bottom: 0;
+    display: block;
+    background: #333;
+}
+
+footer {
+    text-align: center;
+}
