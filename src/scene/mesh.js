@@ -12,9 +12,6 @@ define(['glMatrix'], function(glM) {
     var Mesh = function(){
 
 
-
-
-
     };
 
     //create identity matrix
@@ -56,9 +53,9 @@ define(['glMatrix'], function(glM) {
     }
 
     /**
-     * [getVertexBuffer description]
-     * @param  {[type]} gl [description]
-     * @return {WebGLBuffer}    [description]
+     * Prepare and return vertex buffer
+     * @param  {WebGLRenderingContext} gl WebGL context
+     * @return {WebGLBuffer}  
      */
     Mesh.prototype.getVertexBuffer = function(gl){
         if(!this._vertexBuffer){
@@ -71,9 +68,9 @@ define(['glMatrix'], function(glM) {
     };
 
     /**
-     * [getVertexBuffer description]
-     * @param  {[type]} gl [description]
-     * @return {WebGLBuffer}    [description]
+     * Prepare and return vertex color buffer
+     * @param  {WebGLRenderingContext} gl WebGL context
+     * @return {WebGLBuffer}  
      */
     Mesh.prototype.getColorBuffer = function(gl){
         if(!this._colorBuffer){
@@ -84,7 +81,11 @@ define(['glMatrix'], function(glM) {
         }
         return this._colorBuffer;
     };
-
+    /**
+     * Prepare and return element buffer containing vertex indices
+     * @param  {WebGLRenderingContext} gl WebGL context
+     * @return {WebGLBuffer}  
+     */
     Mesh.prototype.getElementBuffer = function(gl){
         if(!this._elementBuffer){
             var buffer = gl.createBuffer(); 
@@ -95,6 +96,11 @@ define(['glMatrix'], function(glM) {
         return this._elementBuffer;
     };
 
+    /**
+     * Render mesh
+     * @param  {WebGLRenderingContext} gl WebGL context
+     * @param  {ShaderProgram} shaderProgram PRogram to use while rendering
+     */
     Mesh.prototype.render = function(gl, shaderProgram){
 
 

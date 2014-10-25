@@ -6,8 +6,8 @@ require.config({
         glMatrix: "../lib/gl-matrix-min",
         cannon: "../lib/cannon.min.js",
 
-        text: "../lib/text", // plugin for loading plain-text files
-        image: "../lib/image" // plugin for loading images
+        text: "../lib/text", // plugin for loading plain-text files - for shaders
+        image: "../lib/image" // plugin for loading images - for textures
     }
 });
 

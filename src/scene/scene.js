@@ -12,6 +12,7 @@ define(['glMatrix','./cube','../shaders/shader-program','../shaders/default/vert
     var Scene = function(){
 
 
+        //Generate objects
         var x,y;
 
         var cubes = [];
@@ -33,6 +34,9 @@ define(['glMatrix','./cube','../shaders/shader-program','../shaders/default/vert
 
         this.cubes = cubes;
 
+
+
+        //create shader program
         this.shaderProgram = new ShaderProgram(gl, new VertexShader(), new FragmentShader());
 
         this.viewportWidth = 0;
@@ -45,16 +49,9 @@ define(['glMatrix','./cube','../shaders/shader-program','../shaders/default/vert
 
     Scene.prototype.render = function(gl){
 
-        var shaderProgram = this.shaderProgram;
 
 
-
-        shaderProgram.use();
-
-
-
-
-
+        this.shaderProgram.use();
 
 
         var perspectiveMatrix = glM.mat4.create();
@@ -63,14 +60,14 @@ define(['glMatrix','./cube','../shaders/shader-program','../shaders/default/vert
         glM.mat4.perspective(perspectiveMatrix, 45, this.viewportWidth / this.viewportHeight, 0.1, 100);
 
 
-        var uniformLoc = shaderProgram.getUniformLocation("uPMatrix");
+        var uniformLoc = this.shaderProgram.getUniformLocation("uPMatrix");
         
         gl.uniformMatrix4fv(uniformLoc, false, perspectiveMatrix); // modify uniform 4x4 matrix
 
 
 
         for(var i in this.cubes){
-            this.cubes[i].render(gl, shaderProgram);
+            this.cubes[i].render(gl, this.shaderProgram);
         }
 
     }

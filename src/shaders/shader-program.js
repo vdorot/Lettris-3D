@@ -34,6 +34,9 @@ define([], function() {
 
     /**
      * Compiles and links the shader program
+     *
+     * The shader program is automatically compiled when needed,
+     * you don't need to call this directly.
      */
     ShaderProgram.prototype.compile = function(){
         var gl = this.gl;
