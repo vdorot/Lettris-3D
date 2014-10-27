@@ -11,12 +11,11 @@ define(['glMatrix'], function(glM) {
      */
     var Mesh = function(){
 
+        this.position = {x: 0, y:0, z:0 }; //unclouple position from prototype
+        this.quaternion = {x:0, y:0, z:0, w: 0};
 
     };
 
-    //create identity matrix
-    var matrix = glM.mat4.create();
-    glM.mat4.identity(matrix);
 
     Mesh.prototype = {
         vertices: [],
@@ -30,8 +29,6 @@ define(['glMatrix'], function(glM) {
             vertexIndex: []
         },
 
-        modelMatrix: matrix,
-
         //default values
         uniforms: {
             modelMatrix: "uMVMatrix"
@@ -40,17 +37,44 @@ define(['glMatrix'], function(glM) {
         attributes: {
             vertexColor: "aVertexColor",
             vertexPosition: "aVertexPosition"
-        }
+        },
+        position: {x: 0, y:0, z:0 },
+        quaternion: {x:0, y:0, z:0, w: 0}
 
-    }
+    };
+
+    Mesh.prototype.setPosition = function(position){
+        this.position.x = position.x;
+        this.position.y = position.y;
+        this.position.z = position.z; 
+    };
+
+    Mesh.prototype.setQuaternion = function(quaternion){
+        this.quaternion.x = quaternion.x;
+        this.quaternion.y = quaternion.y;        
+        this.quaternion.z = quaternion.z;
+        this.quaternion.w = quaternion.w;
+    };
+
 
     /**
      * Get the model matrix
      * @return {mat4} Transformation matrix
      */
     Mesh.prototype.getMatrix = function(){
-        return this.modelMatrix;
-    }
+
+
+        var matrix = glM.mat4.create();
+
+        var v = glM.vec3.fromValues(this.position.x, this.position.y, this.position.z);
+
+        var q = glM.vec4.fromValues(this.quaternion.x, this.quaternion.y, this.quaternion.z, this.quaternion.w);
+
+        glM.mat4.fromRotationTranslation(matrix, q, v);
+
+        return matrix;
+
+    };
 
     /**
      * Prepare and return vertex buffer

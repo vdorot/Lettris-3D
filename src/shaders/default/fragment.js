@@ -11,7 +11,7 @@ define(['../shader','text!./fragment.glsl'], function(Shader, shaderCode) {
      */
     var FragmentShader = function(){
         Shader.call(this, "default-fragment", 'fragment', shaderCode);
-    }
+    };
 
     FragmentShader.prototype = Object.create(Shader.prototype);
     FragmentShader.prototype.constructor = Shader;

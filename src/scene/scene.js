@@ -9,30 +9,20 @@ define(['glMatrix','./cube','../shaders/shader-program','../shaders/default/vert
     /**
      * @constructor
      */
-    var Scene = function(){
+    var Scene = function(viewportWidth, viewportHeight){
 
 
-        //Generate objects
-        var x,y;
+        this.viewportWidth = viewportWidth;
 
-        var cubes = [];
-        for(x=-3; x<=3; x++){
-            for(y=-2;  y<=1; y++){
-                for(z = -3; z<=0; z++){
+        this.viewportHeight = viewportHeight;
 
-                     var cube = new Cube();
+        /**
+         * [objects description]
+         * @type {Array.<Mesh>}
+         */
+        this.objects = [];
 
-                    var matrix = glM.mat4.create();
-                    glM.mat4.identity(matrix);
-                    glM.mat4.translate(matrix,matrix,[x*3,y*3.8 +1.3, -10 + 3.8*z]); 
 
-                    cube.modelMatrix = matrix;        
-                    cubes.push(cube);       
-                }
-            }
-        }
-
-        this.cubes = cubes;
 
 
 
@@ -44,10 +34,35 @@ define(['glMatrix','./cube','../shaders/shader-program','../shaders/default/vert
 
     };
 
-    Scene.prototype.viewportDimensionsProvider = null;
+
+
+    Scene.prototype.updateViewport = function(width, height){
+        this.viewportWidth = width;
+        this.viewportHeight = height;
+    };
+
+
+    Scene.prototype.add = function(what){
+        if(arguments.length >1){
+            for(var i in arguments){
+                thia.add(arguments[i]);
+            }
+        } else 
+        if(what instanceof Array){
+            for(var j in what){
+                this.add(what[j]);
+            }
+            return;
+        } else {
+            this.objects.push(what);
+        }
+
+    };
 
 
     Scene.prototype.render = function(gl){
+
+
 
 
 
@@ -66,11 +81,11 @@ define(['glMatrix','./cube','../shaders/shader-program','../shaders/default/vert
 
 
 
-        for(var i in this.cubes){
-            this.cubes[i].render(gl, this.shaderProgram);
+        for(var i in this.objects){
+            this.objects[i].render(gl, this.shaderProgram);
         }
 
-    }
+    };
 
 
 

@@ -30,7 +30,7 @@ define([], function() {
 
         this._shaderProgram = null;
 
-    }
+    };
 
     /**
      * Compiles and links the shader program
@@ -56,7 +56,7 @@ define([], function() {
         }
         console.log("Shader program linked");
         this._shaderProgram = shaderProgram;
-    }
+    };
 
     /**
      * Compiles the program, if it hasn't been already
@@ -65,7 +65,7 @@ define([], function() {
         if(this._shaderProgram === null){
             this.compile();
         }
-    }
+    };
 
     /**
      * Sets the OpenGL pipeline to use this shader
@@ -73,7 +73,7 @@ define([], function() {
     ShaderProgram.prototype.use = function(){
         this.ensureCompiled();
         this.gl.useProgram(this._shaderProgram);
-    }
+    };
 
     /**
      * Get the location of a uniform variable
@@ -83,7 +83,7 @@ define([], function() {
     ShaderProgram.prototype.getUniformLocation = function(name){
         this.ensureCompiled();
         return gl.getUniformLocation(this._shaderProgram,name);
-    }
+    };
 
     /**
      * Get attribute location
@@ -93,7 +93,7 @@ define([], function() {
     ShaderProgram.prototype.getAttribLocation = function(name){
         this.ensureCompiled();       
         return gl.getAttribLocation(this._shaderProgram, name);        
-    }
+    };
 
 
 

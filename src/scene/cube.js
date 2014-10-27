@@ -28,31 +28,21 @@ define(['./mesh','glMatrix'], function(Mesh, glM) {
                     
                 glM.mat4.rotateY(this.rotMatrix,this.rotMatrix,-r);    
                 this.rotation = r;  
-            }
+            };
 
             this.addRotation = function(inc){
                 this.setRotation((this.rotation + inc) % (Math.PI * 2));
-            }
+            };
 
             this.setRotation(Math.random() * 2 * Math.PI);
 
         /*###############*/
 
-    }
+    };
 
     Cube.prototype = Object.create(Mesh.prototype);
     Cube.prototype.constructor = Mesh;
 
-    /**
-     * Get the model matrix
-     * @return {mat4}
-     */
-    Cube.prototype.getMatrix = function(){
-        //combine position and rotation matrix
-        var result = glM.mat4.create();
-        glM.mat4.multiply(result,this.modelMatrix,this.rotMatrix);
-        return result;
-    }
 
 
     Cube.prototype.vertices = [

@@ -12,7 +12,7 @@ define([], function() {
     var ShaderType = {
         VERTEX: 'vertex',
         FRAGMENT: 'fragment'
-    }
+    };
 
     /**
      * @constructor
@@ -37,7 +37,7 @@ define([], function() {
          */       
         this.type = type;
 
-    }
+    };
 
     Shader.prototype.ShaderType = ShaderType;
 
@@ -57,7 +57,7 @@ define([], function() {
         }
         console.log("Shader "+ this.name + " compiled");
         return shader;
-    }
+    };
 
     return Shader;
 
