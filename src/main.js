@@ -139,14 +139,26 @@ $(function() {
 
             cube.setPosition(pos);
 
+            var x = Math.random*Math.PI*2;
+            var y = Math.random*Math.PI*2;
+            var z = Math.random*Math.PI*2;
+
+            var quat = glM.quat.create();
+
+            glM.quat.setAxisAngle(quat,[Math.random(),Math.random(),Math.random()],Math.random()*Math.PI*2);
+            glM.quat.normalize(quat,quat);
+
+            cube.setQuaternion({x: quat[0], y: quat[1], z: quat[2], w: quat[3]});
+
+
             scene.add(cube);      
 
 
             var shape = new CANNON.Box(new CANNON.Vec3(1,1,1));
-            var boxBody = new CANNON.Body({ mass: 0.5, material: cubeMat });
+            var boxBody = new CANNON.Body({ mass: Math.random(10), material: cubeMat });
             boxBody.addShape(shape);
             boxBody.position.set(cube.position.x, cube.position.y, cube.position.z);
-
+            boxBody.quaternion.copy(cube.quaternion);
             boxBody.__cube = cube;
 
             world.add(boxBody);
