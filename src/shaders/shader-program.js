@@ -30,6 +30,8 @@ define([], function() {
 
         this._shaderProgram = null;
 
+        this.__attribLoc = {};
+
     };
 
     /**
@@ -51,8 +53,7 @@ define([], function() {
         gl.linkProgram(shaderProgram);
 
         if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-            console.error("Unable to initialize shader program.");
-            return;
+            throw new Error("Unable to initialize shader program.");
         }
         console.log("Shader program linked");
         this._shaderProgram = shaderProgram;
@@ -92,7 +93,20 @@ define([], function() {
      */
     ShaderProgram.prototype.getAttribLocation = function(name){
         this.ensureCompiled();       
-        return gl.getAttribLocation(this._shaderProgram, name);        
+        if(!(name in this.__attribLoc)){
+
+            var loc = gl.getAttribLocation(this._shaderProgram, name);
+
+            console.log('Attribute ' + name + ' index: ' + loc);
+
+            if(loc == -1){
+                throw new Error("Shader attribute " + name + " not found");
+            }
+
+            this.__attribLoc[name] = loc;
+
+        }
+        return this.__attribLoc[name];        
     };
 
 

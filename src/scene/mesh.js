@@ -24,11 +24,6 @@ define(['glMatrix'], function(glM) {
 
         vertexIndex: [],
 
-        physicsEnvelope: {
-            vertices: [],
-            vertexIndex: []
-        },
-
         //default values
         uniforms: {
             modelMatrix: "uMVMatrix"
@@ -38,6 +33,7 @@ define(['glMatrix'], function(glM) {
             vertexColor: "aVertexColor",
             vertexPosition: "aVertexPosition"
         },
+
         position: {x: 0, y:0, z:0 },
         quaternion: {x:0, y:0, z:0, w: 0}
 
@@ -49,11 +45,19 @@ define(['glMatrix'], function(glM) {
         this.position.z = position.z; 
     };
 
+    Mesh.prototype.getPosition = function(){
+        return this.position;
+    };
+
     Mesh.prototype.setQuaternion = function(quaternion){
         this.quaternion.x = quaternion.x;
         this.quaternion.y = quaternion.y;        
         this.quaternion.z = quaternion.z;
         this.quaternion.w = quaternion.w;
+    };
+
+    Mesh.prototype.getQuaternion = function(){
+        return this.quaternion;
     };
 
 
@@ -75,6 +79,8 @@ define(['glMatrix'], function(glM) {
         return matrix;
 
     };
+
+
 
     /**
      * Prepare and return vertex buffer
@@ -120,12 +126,17 @@ define(['glMatrix'], function(glM) {
         return this._elementBuffer;
     };
 
+
+
     /**
      * Render mesh
      * @param  {WebGLRenderingContext} gl WebGL context
      * @param  {ShaderProgram} shaderProgram PRogram to use while rendering
      */
     Mesh.prototype.render = function(gl, shaderProgram){
+
+
+
 
 
         //preparing vertex buffer

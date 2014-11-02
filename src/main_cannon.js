@@ -1,4 +1,4 @@
-require(['jquery','./scene/scene','./scene/cube','./scene/letter','./fps-counter', 'ammo','glMatrix'], function($,Scene,Cube,Letter,FpsCounter,Ammo__,glM) {
+require(['jquery','./scene/scene','./scene/cube','./scene/letter','./fps-counter', 'cannon','glMatrix'], function($,Scene,Cube,Letter,FpsCounter,Cannon,glM) {
 
 // jQuery DOMReady handler - wait for html document to load
 $(function() {
@@ -58,40 +58,6 @@ $(function() {
         scene.viewportWidth = canvas.clientWidth;
         scene.viewportHeight = canvas.clientHeight;
 
-        console.log(Ammo);
-
-
-        var collisionConfiguration = new Ammo.btDefaultCollisionConfiguration(); // every single |new| currently leaks...
-        var dispatcher = new Ammo.btCollisionDispatcher(collisionConfiguration);
-        var overlappingPairCache = new Ammo.btDbvtBroadphase();
-        var solver = new Ammo.btSequentialImpulseConstraintSolver();
-        var dynamicsWorld = new Ammo.btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
-        dynamicsWorld.setGravity(new Ammo.btVector3(0, -10, 0));
-
-        var bodies = [];
-
-
-        (function() {
-
-            var groundShape = new Ammo.btBoxShape(new Ammo.btVector3(30,10,30));
-
-            var groundTransform = new Ammo.btTransform();
-            groundTransform.setIdentity();
-            groundTransform.setOrigin(new Ammo.btVector3(0, -12, 0));
-
-            var mass = 0;
-            var localInertia = new Ammo.btVector3(0, 0, 0);
-            var myMotionState = new Ammo.btDefaultMotionState(groundTransform);
-            var rbInfo = new Ammo.btRigidBodyConstructionInfo(0, myMotionState, groundShape, localInertia);
-            var body = new Ammo.btRigidBody(rbInfo);
-
-            dynamicsWorld.addRigidBody(body);
-            bodies.push(body);
-        })();
-
-
-
-/*
 
 
 
@@ -116,11 +82,38 @@ $(function() {
 
         world.add(groundBody);
 
-*/
 
 
 
-/*
+
+        var positions = [
+            {x:0, y:3, z: -10},
+            {x:1, y:6, z: -10},   
+            {x:-3.5, y:6, z: -10},   
+
+            {x:-1.5, y:9, z: -10},
+            {x:2, y:10, z: -10},   
+            {x:-3, y:11, z: -10}, 
+
+            {x:0, y:13, z: -10},
+            {x:4, y:14, z: -10},   
+            {x:-2, y:15, z: -10}, 
+
+            {x:0, y:3, z: -12},
+            {x:1, y:6, z: -12},   
+            {x:-3.5, y:6, z: -12},   
+
+            {x:-1.5, y:9, z: -12},
+            {x:2, y:10, z: -12},   
+            {x:-3, y:11, z: -12}, 
+
+            {x:0, y:13, z: -12},
+            {x:4, y:14, z: -12},   
+            {x:-2, y:15, z: -12}, 
+
+
+        ]; 
+
 
 
     var cubeMat = new CANNON.Material();
@@ -131,29 +124,17 @@ $(function() {
 
             world.addContactMaterial(cube_ground);
             world.addContactMaterial(cube_cube);
-*/
+
 
     var cubeCnt = 0;
-
-
-
-    var letterIndex = [];
-
-    var letterBodies = [];
-
 
     var genCube = function(){
 
 
-            var pos = {x:0 + Math.random()*10-5,y: 14,z:-14 + Math.random()*10};
+            var pos = {x:0 + Math.random()*10-5,y: 14,z:-15 + Math.random()*10-5};
         
 
-            var ltrs = ['a','m','o'];
-
-            var ltr = Math.floor(Math.random()*ltrs.length);
-
-
-            var cube = new Letter(ltrs[ltr]);
+            var cube = new Letter('a');
 
 
             cube.setPosition(pos);
@@ -174,7 +155,7 @@ $(function() {
 
 
 
-            /*var hull = cube.getConvexHull();
+            var hull = cube.getConvexHull();
 
             var hullVerts = [];
 
@@ -188,67 +169,7 @@ $(function() {
                 hullVerts.push(vert);
             }
 
-            console.log(hull);*/
-
-            var boxShape = new Ammo.btBoxShape(new Ammo.btVector3(1, 1, 1));
-
-            var hullShape = new Ammo.btConvexHullShape();
-
-
-            var hull = cube.getConvexHull();
-
-            //console.log(hull);
-
-
-            for(var h=0;h<hull.length/3;h++){
-
-                var hx = hull[h*3];
-                var hy = hull[h*3+1];
-                var hz = hull[h*3+2];
-
-                var pt = new Ammo.btVector3(hx, hy, hz);
-                hullShape.addPoint(pt);               
-
-            }
-
-
-            var startTransform = new Ammo.btTransform();
-            startTransform.setIdentity();
-
-
-
-
-            var mass = 0.01;
-            var localInertia = new Ammo.btVector3(0, 0, 0);
-            boxShape.calculateLocalInertia(mass, localInertia);
-
-            var myMotionState = new Ammo.btDefaultMotionState(startTransform);
-            var rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, myMotionState, hullShape, localInertia);
-            var body = new Ammo.btRigidBody(rbInfo);
-
-            dynamicsWorld.addRigidBody(body);
-
-
-            var origin = body.getWorldTransform().getOrigin();
-            var pos = cube.getPosition();
-            origin.setX(pos.x);
-            origin.setY(pos.y);
-            origin.setZ(pos.z);
-
-            var quat = cube.getQuaternion();
-
-            var rotation = body.getWorldTransform().getRotation();
-            rotation.setX(quat.x);
-            rotation.setY(quat.y);
-            rotation.setZ(quat.z);
-            rotation.setW(quat.w);
-
-            body.__mesh = {a:"yes!"};
-            bodies.push(body);
-            letterBodies.push(body);
-            letterIndex.push(cube);
-
-/*
+            console.log(hull);
 
             var shape = new CANNON.ConvexPolyhedron(hullVerts,hull.faces);
             var boxBody = new CANNON.Body({ mass: Math.random(10), material: cubeMat });
@@ -258,20 +179,14 @@ $(function() {
             boxBody.__cube = cube;
 
             world.add(boxBody);
-
-*/
-
-
-
             cubeCnt++;
-            if(cubeCnt > 300){
+            if(cubeCnt > 200){
                 clearInterval(timer);
             }
 
-
     };
 
-    var timer = setInterval(genCube,100);
+    var timer = setInterval(genCube,1000);
 
 
 
@@ -331,13 +246,6 @@ $(function() {
 
         var error_occured = false;
 
-        
-
-        var trans = new Ammo.btTransform(); 
-
-
-
-
         var animator = function(){
             if(error_occured){
                 return;
@@ -356,55 +264,13 @@ $(function() {
                 if(last){
                     var dt = (now - last) / 1000; // seconds
 
-
-
-                    dynamicsWorld.stepSimulation(dt, 2);
-
-
-
-                    for(var ii=0;ii<letterBodies.length;ii++){
-                        var body = letterBodies[ii];
-                        var motionState = body.getMotionState();
-                        var motionState = body.getMotionState();
-                        if (motionState) {
-                            motionState.getWorldTransform(trans);
-
-                            var letter = letterIndex[ii];
-
-                            var origin = trans.getOrigin();
-                            //console.log(origin);
-
-                            letter.setPosition({x: origin.x(), y: origin.y(), z: origin.z()});
-
-                            var rotation = trans.getRotation(); 
-
-                            letter.setQuaternion({x: rotation.x(), y: rotation.y(), z: rotation.z(), w: rotation.w()});
-
-
-
-                            //console.log(rotation);                           
-
-                            //console.log(letterIndex[ii],"world pos = " + [trans.getOrigin().x().toFixed(2), trans.getOrigin().y().toFixed(2), trans.getOrigin().z().toFixed(2)]);
-                        }                       
+                    try{
+                        world.step(dt);
+                    }catch(e){
+                       //console.log(e);
                     }
 
-
-                   /* bodies.forEach(function(body) {
-                        console.log(body);
-                        var motionState = body.getMotionState();
-                      if (motionState) {
-                        motionState.getWorldTransform(trans);
-
-
-
-                        console.log("world pos = " + [trans.getOrigin().x().toFixed(2), trans.getOrigin().y().toFixed(2), trans.getOrigin().z().toFixed(2)]);
-                      }
-                    });
-*/
-
-
-
-                   /* for(var i=0; i!==world.bodies.length; i++){
+                    for(var i=0; i!==world.bodies.length; i++){
                         var b = world.bodies[i],
                             p = b.position,
                             q = b.quaternion;
@@ -413,7 +279,7 @@ $(function() {
                                 c.setPosition(p);
                                 c.setQuaternion(q);
                             }
-                    }   */             
+                    }                
 
 
                 }

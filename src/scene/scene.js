@@ -2,7 +2,7 @@
  * @module scene
  */
 
-define(['glMatrix','./cube','../shaders/shader-program','../shaders/default/vertex','../shaders/default/fragment'],
+define(['glMatrix','./cube','../shaders/shader-program','../shaders/letter/vertex','../shaders/letter/fragment'],
  function(glM,          Cube,     ShaderProgram,                  VertexShader,                   FragmentShader) {
 
 
@@ -28,6 +28,7 @@ define(['glMatrix','./cube','../shaders/shader-program','../shaders/default/vert
 
         //create shader program
         this.shaderProgram = new ShaderProgram(gl, new VertexShader(), new FragmentShader());
+
 
         this.viewportWidth = 0;
         this.viewportHeight = 0;
@@ -75,7 +76,7 @@ define(['glMatrix','./cube','../shaders/shader-program','../shaders/default/vert
         glM.mat4.perspective(perspectiveMatrix, 45, this.viewportWidth / this.viewportHeight, 0.1, 100);
 
 
-        var uniformLoc = this.shaderProgram.getUniformLocation("uPMatrix");
+        var uniformLoc = this.shaderProgram.getUniformLocation("uProjectionMatrix");
         
         gl.uniformMatrix4fv(uniformLoc, false, perspectiveMatrix); // modify uniform 4x4 matrix
 
