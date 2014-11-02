@@ -85,6 +85,7 @@ $(function() {
             var rbInfo = new Ammo.btRigidBodyConstructionInfo(0, myMotionState, groundShape, localInertia);
             var body = new Ammo.btRigidBody(rbInfo);
 
+
             dynamicsWorld.addRigidBody(body);
             bodies.push(body);
         })();
@@ -212,10 +213,36 @@ $(function() {
             }
 
 
-            var startTransform = new Ammo.btTransform();
-            startTransform.setIdentity();
+            var quat = cube.getQuaternion();
+
+            var rotation = Ammo.btQuaternion(quat.x,quat.y,quat.z,quat.w);
+
+            var pos = cube.getPosition();
+            var origin = new Ammo.btVector3(pos.x, pos.y, pos.z);
+
+            var startTransform = new Ammo.btTransform(rotation,origin);
+            //startTransform.setIdentity();
+
+            console.log(startTransform);
+
+            var origin = startTransform.getOrigin();
+
+            origin.setX(pos.x);
+            origin.setY(pos.y);
+            origin.setZ(pos.z);
 
 
+
+
+
+            
+
+            /*var rotation = startTransform.getRotation();
+            rotation.setX(quat.x);
+            rotation.setY(quat.y);
+            rotation.setZ(quat.z);
+            rotation.setW(quat.w);
+*/
 
 
             var mass = 0.01;
@@ -226,24 +253,17 @@ $(function() {
             var rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, myMotionState, hullShape, localInertia);
             var body = new Ammo.btRigidBody(rbInfo);
 
+
+
+
+
+            body.setFriction(0.8);
+            body.setRestitution(0);
+
             dynamicsWorld.addRigidBody(body);
+ 
 
 
-            var origin = body.getWorldTransform().getOrigin();
-            var pos = cube.getPosition();
-            origin.setX(pos.x);
-            origin.setY(pos.y);
-            origin.setZ(pos.z);
-
-            var quat = cube.getQuaternion();
-
-            var rotation = body.getWorldTransform().getRotation();
-            rotation.setX(quat.x);
-            rotation.setY(quat.y);
-            rotation.setZ(quat.z);
-            rotation.setW(quat.w);
-
-            body.__mesh = {a:"yes!"};
             bodies.push(body);
             letterBodies.push(body);
             letterIndex.push(cube);
@@ -378,7 +398,9 @@ $(function() {
 
                             var rotation = trans.getRotation(); 
 
-                            letter.setQuaternion({x: rotation.x(), y: rotation.y(), z: rotation.z(), w: rotation.w()});
+                            var quat = {x: rotation.x(), y: rotation.y(), z: rotation.z(), w: rotation.w()};
+
+                            letter.setQuaternion(quat);
 
 
 
