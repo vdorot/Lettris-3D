@@ -33,6 +33,8 @@ define(['glMatrix','./cube','../shaders/shader-program','../shaders/letter/verte
         this.viewportWidth = 0;
         this.viewportHeight = 0;
 
+        this.viewAngle = 0;
+
     };
 
 
@@ -70,10 +72,32 @@ define(['glMatrix','./cube','../shaders/shader-program','../shaders/letter/verte
         this.shaderProgram.use();
 
 
+
+
+
+        var point = glM.vec3.fromValues(-10,10,10);
+
+
+        var mat = glM.mat4.create();
+
+        glM.mat4.identity(mat);
+
+        glM.mat4.rotateY(mat,mat,this.viewAngle);
+
+        glM.vec3.transformMat4(point,point,mat);
+
+
+        var viewMatrix = glM.mat4.create();
+
+        glM.mat4.lookAt(viewMatrix,point,[0,0,0],[0,1,0]);
+
+
         var perspectiveMatrix = glM.mat4.create();
 
 
         glM.mat4.perspective(perspectiveMatrix, 45, this.viewportWidth / this.viewportHeight, 0.1, 100);
+
+        glM.mat4.multiply(perspectiveMatrix, perspectiveMatrix,viewMatrix);
 
 
         var uniformLoc = this.shaderProgram.getUniformLocation("uProjectionMatrix");

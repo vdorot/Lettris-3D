@@ -86,6 +86,9 @@ $(function() {
             var body = new Ammo.btRigidBody(rbInfo);
 
 
+            body.setFriction(0.8);
+            body.setRestitution(0.01);
+
             dynamicsWorld.addRigidBody(body);
             bodies.push(body);
         })();
@@ -146,10 +149,10 @@ $(function() {
     var genCube = function(){
 
 
-            var pos = {x:0 + Math.random()*10-5,y: 14,z:-14 + Math.random()*10};
+            var pos = {x:Math.random()*10-5,y: 20,z: Math.random()*10 -5 };
         
 
-            var ltrs = ['a','m','o'];
+            var ltrs = "abcdefghijklmnopqrstuvxyz";
 
             var ltr = Math.floor(Math.random()*ltrs.length);
 
@@ -223,8 +226,6 @@ $(function() {
             var startTransform = new Ammo.btTransform(rotation,origin);
             //startTransform.setIdentity();
 
-            console.log(startTransform);
-
             var origin = startTransform.getOrigin();
 
             origin.setX(pos.x);
@@ -245,7 +246,7 @@ $(function() {
 */
 
 
-            var mass = 0.01;
+            var mass = 1;
             var localInertia = new Ammo.btVector3(0, 0, 0);
             boxShape.calculateLocalInertia(mass, localInertia);
 
@@ -258,7 +259,7 @@ $(function() {
 
 
             body.setFriction(0.8);
-            body.setRestitution(0);
+            body.setRestitution(0.01);
 
             dynamicsWorld.addRigidBody(body);
  
@@ -284,14 +285,14 @@ $(function() {
 
 
             cubeCnt++;
-            if(cubeCnt > 300){
+            if(cubeCnt > 150){
                 clearInterval(timer);
             }
 
 
     };
 
-    var timer = setInterval(genCube,100);
+    var timer = setInterval(genCube,0);
 
 
 
@@ -455,6 +456,10 @@ $(function() {
         setInterval(function(){
                         fpsElement.text(fpsCounter.getCountPerSecond());  
         },1000);
+
+        setInterval(function(){
+                        scene.viewAngle += 0.005;
+        },1000/60);
 
 
         animator();
