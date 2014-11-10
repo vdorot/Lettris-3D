@@ -1,5 +1,5 @@
 /**
- * @module shaders/default
+ * @module shaders/letter
  */
 
 define(['../shader','text!./fragment.glsl'], function(Shader, shaderCode) {

@@ -2,7 +2,7 @@
  * @module shaders/default
  */
 
-define(['./mesh','glMatrix','../letters/letters'], function(Mesh, glM, letters) {
+define(['./mesh','glMatrix','./letters/letters'], function(Mesh, glM, letters) {
 
 
 
@@ -36,38 +36,27 @@ define(['./mesh','glMatrix','../letters/letters'], function(Mesh, glM, letters) 
     }
 
     Letter.prototype.models = letters;
-    console.log(letters);
 
+
+    /**
+     * Returns convex hull of letter
+     * @return {Array} Vec3 vertices [x,y,z,x,y,z,...]
+     */
     Letter.prototype.getConvexHull = function(){
         return this.models[this.letter].convexHull;
     };
 
 
-
-    Letter.prototype.__buffers = {};
-
-
-    /**
-     * Create buffer and fill with data
-     *
-     * The buffer is only created once per name, further calls return cached buffers
-     * @param  {WebGLRenderingContext} gl WebGL context
-     * @param  {string} name Buffer name as a cache id
-     * @param  {TypedArray} data Buffer data
-     * @return {WebGLBuffer}  
-     */
-    Letter.prototype.getBuffer = function(gl, name, data){
-
-        //this.__buffers is stored in the prototype, so it is shared between all instances
-        if(!this.__buffers || !this.__buffers[name]){
-            var buffer = gl.createBuffer(); 
-            gl.bindBuffer(gl.ARRAY_BUFFER, buffer); 
-            gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);     
-            this.__buffers[name] = buffer;
-        }
-        return this.__buffers[name];
-
+    Letter.prototype.isPhysicsEnabled = function(){
+        return true;
     };
+
+
+    Letter.prototype.getPhysicsOptions = function(){
+        return {shape: "convex", shapeData: this.getConvexHull(), mass: 1, friction: 0.5, restitution:0.01 };
+    };
+
+
 
     Letter.prototype.attributes = {
         vertex: 'aVertexPosition',
