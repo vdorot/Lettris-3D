@@ -230,6 +230,10 @@ define(['ammo'],function(_Ammo) {
         this.world.removeRigidBody(body);
         delete this.bodies[id];
 
+        for(var i in this.bodies){
+            this.bodies[i].activate();
+        }
+
     };
 
 

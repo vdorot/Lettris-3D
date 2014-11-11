@@ -1,4 +1,5 @@
-require(['jquery','./scene/scene','./scene/renderer','./scene/objects/letter','./scene/objects/physics-box','./scene/objects/stand','./scene/objects/physics-stand-bottom','./scene/objects/physics-stand-side','./fps-counter','glMatrix'], function($,Scene,Renderer,Letter,PhysicsBox,Stand,PhysicsStandBottom,PhysicsStandSide,FpsCounter,glM) {
+require(['jquery','./scene/scene','./scene/renderer','./game','./scene/objects/letter','./scene/objects/physics-box','./scene/objects/stand','./scene/objects/physics-stand-bottom','./scene/objects/physics-stand-side','./fps-counter','glMatrix','./random-letter'],
+function($,         Scene,          Renderer,         Game,       Letter,                 PhysicsBox,                     Stand,                  PhysicsStandBottom,                 PhysicsStandSide,                       FpsCounter,     glM, RandomLetter) {
 
 // jQuery DOMReady handler - wait for html document to load
 $(function() {
@@ -137,63 +138,31 @@ $(function() {
     var letterBodies = [];
 
 
-    var getRandomLetter = function(){
-
-            //http://en.wikipedia.org/wiki/Letter_frequency
-
-            var letterProb = {
-                'a': 8.167,
-                'b': 1.492,
-                'c': 2.782,
-                'd': 4.253,
-                'e': 12.702,
-                'f': 2.228,
-                'g': 2.015,
-                'h': 6.094,
-                'i': 6.966,
-                'j': 0.153,
-                'k': 0.772,
-                'l': 4.025,
-                'm': 2.406,
-                'n': 6.749,
-                'o': 7.507,
-                'p': 1.929,
-                'q': 0.095,
-                'r': 5.987,
-                's': 6.327,
-                't': 9.056,
-                'u': 2.758,
-                'v': 0.978,
-                'w': 2.360,
-                'x': 0.150,
-                'y': 1.974,
-                'z': 0.075,
-            };
 
 
-            var sum = 0;
+    var randomQuat = function(){
+        //http://hub.jmonkeyengine.org/forum/topic/random-rotation/
+        
 
-            for(var i in letterProb){
-                sum += letterProb[i];
-            }
+        var u1 = Math.random();
+        var u2 = Math.random();
+        var u3 = Math.random();
 
 
-            var rand = Math.random()*sum;
+        var u1sqrt = Math.sqrt(u1);
+        var u1m1sqrt = Math.sqrt(1-u1);
+        var x = u1m1sqrt *Math.sin(2*Math.PI*u2);
+        var y = u1m1sqrt *Math.cos(2*Math.PI*u2);
+        var z = u1sqrt *Math.sin(2*Math.PI*u3);
+        var w = u1sqrt *Math.cos(2*Math.PI*u3);
 
-            var ltr = 'a';
 
-            var rem = rand;
-
-            while(rem - letterProb[ltr] > 0){
-                rem = rem - letterProb[ltr];
-                ltr = String.fromCharCode(ltr.charCodeAt() + 1);
-
-            }
-
-            return ltr;
-
+        return {x: x, y: y, z: z, w: w};
+                       
     };
 
+
+    var genTimer = null;
 
 
 
@@ -202,7 +171,7 @@ $(function() {
 
 
 
-            var ltr = getRandomLetter();
+            var ltr = RandomLetter.get();
 
 
             var pos = {x:0,y: 6,z: 0 };
@@ -213,29 +182,29 @@ $(function() {
 
             object.setPosition(pos);
 
-            var x = Math.random*Math.PI*2;
+            /*var x = Math.random*Math.PI*2;
             var y = Math.random*Math.PI*2;
             var z = Math.random*Math.PI*2;
 
             var quat = glM.quat.create();
 
-            glM.quat.setAxisAngle(quat,[1,0,0],1);
-
-
+            glM.quat.setAxisAngle(quat,[Math.random(),Math.ran,0],1);
 
             glM.quat.normalize(quat,quat);
 
             object.setQuaternion({x: quat[0], y: quat[1], z: quat[2], w: quat[3]});
 
-            //object.setQuaternion({x: 1, y: 0, z: 0, w: 1});
+            //object.setQuaternion({x: 1, y: 0, z: 0, w: 1});*/
+
+            object.setQuaternion(randomQuat());
 
 
             scene.add(Renderer.LAYER_LETTERS,object);      
 
 
             cubeCnt++;
-            if(cubeCnt >=100){
-                clearInterval(timer);
+            if(cubeCnt >=10){
+                clearInterval(genTimer);
             }
 
             /*setTimeout(function(){ return function(){
@@ -245,7 +214,10 @@ $(function() {
 
     };
 
-    var timer = setInterval(genObject,400);
+        var OBJGEN_INTERVAL = 500;
+        genTimer = setInterval(genObject,OBJGEN_INTERVAL);
+
+
 
 
 
@@ -304,14 +276,54 @@ $(function() {
         scene.physics.run();
 
 
+        var game = new Game(scene);
 
-        $(document).keypress(function(){
-            console.log('pausing physics');
-            if(scene.physics.running){
-                scene.physics.pause();
-            }else{
-                scene.physics.run();
+
+
+
+
+
+        $(document).keydown(function(evt){
+
+            if(!evt.ctrlKey && !evt.altKey && !evt.shiftKey && evt.keyCode >= 'A'.charCodeAt() && evt.keyCode <= 'Z'.charCodeAt()){
+                evt.preventDefault();
+
+                var letter = String.fromCharCode(evt.keyCode).toLowerCase();
+
+                game.letter(letter);
+
             }
+
+            if(evt.keyCode == 13){  //enter
+                evt.preventDefault();
+                game.accept();
+
+            }
+
+            if(evt.keyCode == 27){ //escape
+                evt.preventDefault();
+                game.cancel();
+            }
+
+            if(evt.keyCode == 8){ //backspace
+                evt.preventDefault();
+                game.back();
+            }
+
+            if(evt.ctrlKey && evt.keyCode == 'P'.charCodeAt()){ //pause game
+                evt.preventDefault(); // don't print page
+                if(scene.physics.running){
+                    scene.physics.pause();
+                    clearInterval(genTimer);
+                    genTimer = null;
+                }else{
+                    scene.physics.run();
+                    genTimer = setInterval(genObject,OBJGEN_INTERVAL);
+                }
+
+            }
+
+
         });
 
 

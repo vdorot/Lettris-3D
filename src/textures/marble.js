@@ -11,7 +11,7 @@ require(['../texture','image!./marble.jpg!rel'], function(Texture, image) {
      */
     var MarbleTexture = function(){
         Texture.call(this,"marble",image);
-    }
+    };
 
     MarbleTexture.prototype = Object.create(Texture.prototype);
     MarbleTexture.prototype.constructor = Texture;

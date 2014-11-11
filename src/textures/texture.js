@@ -12,7 +12,7 @@ require([], function() {
         this.image = image;
 
 
-    }
+    };
 
     return Texture;
 

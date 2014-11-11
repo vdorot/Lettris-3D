@@ -13,12 +13,43 @@ define(['./mesh','glMatrix','./models/models'], function(Mesh, glM, letters) {
         Mesh.call(this);
         this.letter = letter;
 
+        this.highlighted = false;
+        this.selected = false;
+
 
     };
 
     Letter.prototype = Object.create(Mesh.prototype);
     Letter.prototype.constructor = Mesh;
 
+
+
+    Letter.prototype.getLetter = function(){
+        return this.letter;
+    };
+
+
+    Letter.prototype.isHighlighted = function(){
+        return this.highlighted;
+    };
+
+    Letter.prototype.setHighlighted = function(set){
+        if(set === undefined){
+            set = true;
+        }
+        this.highlighted = !!set;
+    };
+
+    Letter.prototype.isSelected = function(){
+        return this.selected;
+    };
+
+    Letter.prototype.setSelected = function(set){
+        if(set === undefined){
+            set = true;
+        }
+        this.selected = !!set;
+    };
 
 
     for(var i in letters){
@@ -66,7 +97,9 @@ define(['./mesh','glMatrix','./models/models'], function(Mesh, glM, letters) {
     };
 
     Letter.prototype.uniforms = {
-        modelMatrix: 'uModelMatrix' 
+        modelMatrix: 'uModelMatrix',
+        selected: 'uSelected',
+        highlighted: 'uHighlighted' 
     };
 
 
@@ -129,6 +162,18 @@ define(['./mesh','glMatrix','./models/models'], function(Mesh, glM, letters) {
 
         gl.uniformMatrix4fv(modelMatrixLoc, false, this.getMatrix());
 
+
+
+        var selectedLoc = shaderProgram.getUniformLocation(this.uniforms.selected);        
+
+
+        gl.uniform1f(selectedLoc, this.selected?1.0:0.0);
+
+
+        var highlightedLoc = shaderProgram.getUniformLocation(this.uniforms.highlighted);        
+
+
+        gl.uniform1f(highlightedLoc, this.highlighted?1.0:0.0);
 
 
     

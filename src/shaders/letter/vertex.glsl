@@ -6,6 +6,9 @@ attribute lowp float aVertexSide;
 uniform mat4 uModelMatrix;
 uniform mat4 uProjectionMatrix;
 
+uniform lowp float uSelected;
+uniform lowp float uHighlighted;
+
 varying lowp vec4 vColor;
 varying mediump vec2 vTextureCoord;
 
@@ -22,6 +25,14 @@ void main(void) {
     	faceColor = vec3(1,0,0);
     }else{
     	faceColor = vec3(0,0,1);
+    }
+
+    if(uHighlighted == 1.0){
+        faceColor = vec3(1,1,1);
+    }
+
+    if(uSelected == 1.0){
+        faceColor = vec3(1,1,0);
     }
 
     faceColor = faceColor + 0.0*aVertexNormal; //prevent aVertexNormal from being optimised away

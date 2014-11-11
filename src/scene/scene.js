@@ -16,7 +16,6 @@ define(['./physics/physics'],
          * [objects description]
          * @type {Array.<Mesh>}
          */
-        this.objects = [];
 
 
         this.layerIndex = {};
@@ -25,6 +24,10 @@ define(['./physics/physics'],
 
         this.physics = new Physics();
 
+    };
+
+    Scene.prototype.getObjects = function(){
+        return this.objects;
     };
 
     /**
@@ -86,7 +89,7 @@ define(['./physics/physics'],
                     throw new Error("Layer "+layer+" does not exist");
                 }
                 var pos = this.objects.indexOf(what);
-                if(pos !== -1){
+                if(pos === -1){
                     this.objects.push(what);
                 }
                 if(!(layer instanceof Array)){
