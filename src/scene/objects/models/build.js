@@ -1,0 +1,271 @@
+var fs = require('fs');
+
+var model = (JSON.parse(fs.readFileSync("./A.js", "utf8")));
+
+
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
+
+  String.prototype.startsWith = function (str){
+    return this.indexOf(str) === 0;
+  };
+
+
+
+var result = {};
+
+
+
+
+fs.readdirSync('./').forEach(function(file) {
+
+
+
+	var letter = file[0];
+
+	if(letter >= 'A' && letter <='Z' && file.endsWith('.js')){
+		console.log(file);
+		
+
+		var coFile = 'co_'+letter+'.js';
+
+
+
+		var model = (JSON.parse(fs.readFileSync("./"+file, "utf8"))); 
+
+		var hull = (JSON.parse(fs.readFileSync("./"+coFile, "utf8"))); 
+
+
+
+		console.log("Building model for "+letter);
+		model = getModel(model);
+		console.log("Building convex hull");
+
+		model.convexHull = getHull(hull);
+
+		result[letter.toLowerCase()] = model;
+
+	} 
+
+
+
+});
+
+var stand = (JSON.parse(fs.readFileSync("./_stand.js", "utf8"))); 
+
+var bottom = (JSON.parse(fs.readFileSync("./_physics_bottom.js", "utf8"))); 
+
+
+var side = (JSON.parse(fs.readFileSync("./_physics_side.js", "utf8"))); 
+
+stand = getModel(stand);
+
+
+stand.physicsBottom = getHull(bottom);
+stand.physicsSide = getHull(side);
+
+result.stand = stand;
+
+
+
+var requireModule = "define(function(){\nreturn " + JSON.stringify(result, null, 2) + ";});";
+
+fs.writeFileSync("./models.js",requireModule);
+
+
+
+
+
+/*
+https://github.com/mrdoob/three.js/wiki/JSON-Model-format-3
+
+42
+[vertex index x3]
+[material index]
+[vertex_uv, vertex_uv, vertex_uv],
+[vertex normal x3]
+
+
+/*/
+ 
+
+
+function getHull(model){
+
+
+
+
+	var v = model.vertices;
+
+	var f = model.faces;
+
+	var n = model.normals;
+
+
+	return v;
+
+
+
+
+}
+
+
+
+
+
+
+
+function getModel(model){
+
+
+
+
+	var uvs = model.uvs[0];
+
+	var min = Math.min.apply(Math,uvs);
+
+	var max = Math.max.apply(Math,uvs);
+
+	var mult = 1/(max-min);
+	
+	for(var i in uvs){
+		uvs[i] = Math.max(0,Math.min(1,(uvs[i]-min)*mult));
+	}
+	
+
+	var k = Math.floor(model.faces.length / 11);
+
+
+	var v = model.vertices;
+
+	var f = model.faces;
+
+	var n = model.normals;
+
+
+	var result = {
+		vertices: [],
+		uvs: [],
+		sides: [],
+		normals: []
+	};
+
+
+
+	for(var a = 0; a<k;a++){
+
+		var i = a*11;
+
+		//console.log(f[i]);
+
+		if(f[i] != 42 ){
+			console.error("NOT 42");
+			return;
+		}
+
+
+		var v1 = f[i+1]*3;
+
+
+		var v1x = v[v1];
+		var v1y = v[v1+1];
+		var v1z = v[v1+2];
+
+		var v2 = f[i+2]*3;
+
+		var v2x = v[v2];
+		var v2y = v[v2+1];
+		var v2z = v[v2+2];
+
+		var v3 = f[i+3]*3;
+
+		var v3x = v[v3];
+		var v3y = v[v3+1];
+		var v3z = v[v3+2];
+
+
+		result.vertices.push(v1x,v1y,v1z, v2x,v2y,v2z, v3x,v3y,v3z);
+
+
+		var matI = f[i+4];
+
+/*
+		console.log('v1',v1x,v1y,v1z);
+		console.log('v2',v2x,v2y,v2z);
+		console.log('v3',v3x,v3y,v3z);
+*/
+
+		var uv1 = f[i+5]*2;
+		var uv2 = f[i+6]*2;
+		var uv3 = f[i+7]*2;
+
+		var uv1u = uvs[uv1];
+		var uv1v = uvs[uv1+1];
+
+		var uv2u = uvs[uv2];
+		var uv2v = uvs[uv2+1];
+
+		var uv3u = uvs[uv3];
+		var uv3v = uvs[uv3+1];	
+
+		result.uvs.push(uv1u,uv1v, uv2u,uv2v, uv3u,uv3v);
+/*
+
+		console.log("uvs1",uv1u,uv1v);
+		console.log("uvs2",uv2u,uv2v);
+		console.log("uvs3",uv3u,uv3v);
+*/
+
+		var n1 = f[i+8]*3;
+		var n2 = f[i+9]*3;
+		var n3 = f[i+10]*3;
+
+
+		var n1x = n[n1];
+		var n1y = n[n1+1];
+		var n1z = n[n1+2];
+
+		var n2x = n[n2];
+		var n2y = n[n2+1];
+		var n2z = n[n2+2];
+
+		var n3x = n[n3];
+		var n3y = n[n3+1];
+		var n3z = n[n3+2];
+
+		result.normals.push(n1x,n1y,n1z, n2x,n2y,n2z, n3x,n3y,n3z);
+
+		var side = 0;
+
+		if(n1x == 0 && n1z ==0){
+
+			if(n1y>0){
+				side = 1; //front
+			}else{
+				side = -1; //back
+			}
+
+
+		}else{
+			side = 0; //side
+		}
+
+		result.sides.push(side, side, side);
+
+
+
+
+	}
+
+	return result;
+
+
+
+
+}
+
+
+
+
+

@@ -1,8 +1,8 @@
 /**
- * @module shaders/default
+ * @module scene/models
  */
 
-define(['./mesh','glMatrix','./letters/letters'], function(Mesh, glM, letters) {
+define(['./mesh','glMatrix','./models/models'], function(Mesh, glM, letters) {
 
 
 

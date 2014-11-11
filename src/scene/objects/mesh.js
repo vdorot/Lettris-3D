@@ -1,5 +1,5 @@
 /**
- * @module scene
+ * @module scene/models
  */
 
 

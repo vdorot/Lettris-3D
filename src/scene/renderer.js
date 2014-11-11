@@ -2,8 +2,8 @@
  * @module scene
  */
 
-define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../shaders/letter/fragment'],
- function(glM,      ShaderProgram, LetterVertex, LetterFragment) {
+define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../shaders/letter/fragment','../shaders/stand/vertex','../shaders/stand/fragment'],
+ function(glM,      ShaderProgram, LetterVertex, LetterFragment, StandVertex, StandFragment) {
 
 
     /**
@@ -24,11 +24,14 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
 
         this.letterShader = new ShaderProgram(gl, new LetterVertex(), new LetterFragment());
 
-
+        this.standShader = new ShaderProgram(gl, new StandVertex(), new StandFragment());
 
     };
 
     Renderer.LAYER_LETTERS = 'letters';
+
+    Renderer.LAYER_STAND = 'stand';
+
 
     Renderer.prototype.updateViewport = function(width, height){
         this.viewportWidth = width;
@@ -51,7 +54,7 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         gl.clearColor(0.3, 0.3, 0.3, 1.0);                      // Set clear color to black, fully opaque
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);      // Clear the color as well as the depth buffer.
 
-        var point = glM.vec3.fromValues(-10,10,10);
+        var point = glM.vec3.fromValues(0,5,4);
 
 
         var mat = glM.mat4.create();
@@ -65,7 +68,7 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
 
         var viewMatrix = glM.mat4.create();
 
-        glM.mat4.lookAt(viewMatrix,point,[0,0,0],[0,1,0]);
+        glM.mat4.lookAt(viewMatrix,point,[0,1.5,0],[0,1,0]);
 
 
         var perspectiveMatrix = glM.mat4.create();
@@ -86,6 +89,17 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
 
 
         this.scene.renderLayer(this.gl, Renderer.LAYER_LETTERS,this.letterShader);
+
+
+
+        this.standShader.use();
+
+        uniformLoc = this.standShader.getUniformLocation("uProjectionMatrix");
+        
+        gl.uniformMatrix4fv(uniformLoc, false, perspectiveMatrix); // modify uniform 4x4 matrix
+
+
+        this.scene.renderLayer(this.gl, Renderer.LAYER_STAND,this.standShader);
 
 
 

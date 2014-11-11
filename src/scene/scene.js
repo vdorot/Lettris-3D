@@ -62,7 +62,6 @@ define(['./physics/physics'],
             objects: []
         };
         this.layerIndex[name] = layer;
-        console.log(this.layerIndex);
     };
 
     /**
