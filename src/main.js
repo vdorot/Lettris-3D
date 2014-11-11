@@ -203,7 +203,7 @@ $(function() {
 
 
             cubeCnt++;
-            if(cubeCnt >=10){
+            if(cubeCnt >=200){
                 clearInterval(genTimer);
             }
 
