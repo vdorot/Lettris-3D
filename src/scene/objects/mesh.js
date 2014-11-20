@@ -83,13 +83,15 @@ define(['glMatrix'], function(glM) {
 
     Mesh.prototype.__buffers = {};
 
+    Mesh.prototype.__textures = {};
+
 
     /**
      * Create buffer and fill with data
      *
      * The buffer is only created once per name, further calls return cached buffers
      * @param  {WebGLRenderingContext} gl WebGL context
-     * @param  {string} name Buffer name as a cache id
+     * @param  {string} name Buffer name as a global cache id.
      * @param  {TypedArray} data Buffer data
      * @return {WebGLBuffer}  
      */

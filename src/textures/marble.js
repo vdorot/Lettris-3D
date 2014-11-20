@@ -2,9 +2,11 @@
  * @module textures
  */
 
-require(['../texture','image!./marble.jpg!rel'], function(Texture, image) {
+define(['./texture','image!./marble.jpg!rel'], function(Texture, image) {
 
 
+
+	//http://naldzgraphics.net/textures/free-textures-seamless-marble/
 
     /**
      * @constructor

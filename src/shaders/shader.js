@@ -52,8 +52,8 @@ define([], function() {
         gl.shaderSource(shader,this.code);
         gl.compileShader(shader);
         if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {  
-          console.error("An error occurred while compiling shader " + this.name +": " + gl.getShaderInfoLog(shader)); 
-          return null;  
+          console.error(gl.getShaderInfoLog(shader));
+          throw new Error("An error occurred while compiling shader " + this.name); 
         }
         console.log("Shader "+ this.name + " compiled");
         return shader;

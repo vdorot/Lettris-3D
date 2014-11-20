@@ -7,7 +7,7 @@ uniform mat4 uModelMatrix;
 uniform mat4 uProjectionMatrix;
 
 varying lowp vec4 vColor;
-varying mediump vec2 vTextureCoord;
+varying mediump vec2 vTexCoord;
 
 
 void main(void) {
@@ -28,5 +28,5 @@ void main(void) {
 
     vColor = vec4(faceColor,1.0);
 
-    vTextureCoord = aVertexUV;
+    vTexCoord = aVertexUV;
 }

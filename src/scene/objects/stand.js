@@ -2,7 +2,7 @@
  * @module scene/models
  */
 
-define(['./mesh','glMatrix','./models/models'], function(Mesh, glM, Models) {
+define(['./mesh','glMatrix','./models/models','../../textures/marble'], function(Mesh, glM, Models, MarbleTexture) {
 
 
 
@@ -20,6 +20,8 @@ define(['./mesh','glMatrix','./models/models'], function(Mesh, glM, Models) {
     Stand.prototype.model = Models.stand;
 
 
+    Stand.prototype.texture = new MarbleTexture();
+
 
     Stand.prototype.isPhysicsEnabled = function(){
         return false;
@@ -36,7 +38,8 @@ define(['./mesh','glMatrix','./models/models'], function(Mesh, glM, Models) {
     };
 
     Stand.prototype.uniforms = {
-        modelMatrix: 'uModelMatrix' 
+        modelMatrix: 'uModelMatrix',
+        textureUnit: 'uTextureUnit'
     };
 
 
@@ -90,6 +93,20 @@ define(['./mesh','glMatrix','./models/models'], function(Mesh, glM, Models) {
 
         gl.enableVertexAttribArray(sideAttribute);       
         gl.vertexAttribPointer(sideAttribute, 1, gl.FLOAT, false, 0, 0);
+
+
+
+        //set up texture        
+        
+
+
+        var texHandle = this.texture.getHandle(gl); //this.texture gets texture from prototype - it is shared among instances
+        gl.activeTexture(gl.TEXTURE0); //texture unit 0
+        gl.bindTexture(gl.TEXTURE_2D, texHandle);
+
+        var textureUnitLoc = shaderProgram.getUniformLocation(this.uniforms.textureUnit);
+        gl.uniform1i(textureUnitLoc, 0); //texture unit 0      
+
 
 
 

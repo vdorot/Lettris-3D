@@ -53,6 +53,7 @@ define([], function() {
         gl.linkProgram(shaderProgram);
 
         if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+            console.error(gl.getProgramInfoLog(shaderProgram));
             throw new Error("Unable to initialize shader program.");
         }
         console.log("Shader program linked");
