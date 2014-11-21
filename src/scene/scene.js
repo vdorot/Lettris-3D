@@ -1,6 +1,3 @@
-/**
- * @module scene
- */
 
 define(['./physics/physics'],
  function(Physics) {

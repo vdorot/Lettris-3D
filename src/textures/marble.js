@@ -1,8 +1,8 @@
-/**
+/***
  * @module textures
  */
 
-define(['./texture','image!./marble.jpg!rel'], function(Texture, image) {
+define(['./texture','image!../../textures/marble.jpg!rel'], function(Texture, image) {
 
 
 

@@ -1,11 +1,28 @@
-define(['jquery','./scene/objects/letter'],function($,Letter){
+/**
+ * @module game
+ */
 
+define(['jquery','./scene/objects/letter'],function($,Letter){
+	
+
+	/**
+	 * Game logic
+	 * @constructor
+	 * @alias module:game
+	 * @class  Game
+	 * @param {Scene} scene The scene
+	 */
 	var Game = function(scene){
 		this.scene = scene;
 
 		this.word = [];
 	};
 
+	/**
+	 * Get letter object by letter
+	 * @param  {string} letter Character
+	 * @return {Letter}        Letter mesh
+	 */
 	Game.prototype.getObject = function(letter){
 		var objects = this.scene.getObjects();
 		for(var i in objects){
@@ -19,7 +36,10 @@ define(['jquery','./scene/objects/letter'],function($,Letter){
 		return null;
 
 	};
-
+	/**
+	 * Highlight Letter objects
+	 * @param  {string} letter Character
+	 */
 	Game.prototype.highlightLetter = function(letter){
 		var objects = this.scene.getObjects();
 		for(var i in objects){
@@ -31,7 +51,10 @@ define(['jquery','./scene/objects/letter'],function($,Letter){
 			}
 		}		
 	};
-
+	/**
+	 * Handle letter pressed on ekyboard
+	 * @param  {string} letter The letter
+	 */
 	Game.prototype.letter = function(letter){
 		var object = this.getObject(letter);
 		if(object === null){
@@ -46,6 +69,9 @@ define(['jquery','./scene/objects/letter'],function($,Letter){
 		return true;
 	};
 
+	/**
+	 * Remove all highlights
+	 */
 	Game.prototype.unhighlight = function(){
 		var objects = this.scene.getObjects();
 		for(var i in objects){
@@ -54,7 +80,9 @@ define(['jquery','./scene/objects/letter'],function($,Letter){
 			}
 		}			
 	};
-
+	/**
+	 * Deselect objects
+	 */
 	Game.prototype.unselect = function(){
 		var objects = this.scene.getObjects();
 		for(var i in objects){
@@ -63,7 +91,9 @@ define(['jquery','./scene/objects/letter'],function($,Letter){
 			}
 		}
 	};
-
+	/**
+	 * Handle backspace
+	 */
 	Game.prototype.back = function(){ //backspace
 		if(this.word.length < 1){
 			return;
@@ -79,24 +109,30 @@ define(['jquery','./scene/objects/letter'],function($,Letter){
 		return true;
 
 	};
-
+	/**
+	 * Update html word
+	 */
 	Game.prototype._update = function(){
 		//update html ui
 		$('#word').text(this.getWord());
 	};
-
+	/**
+	 * Cancel word
+	 */
 	Game.prototype.cancel = function(){ //escape
 		this.unselect();
 		this.word = [];
 		this.unhighlight();
 		this._update();
 	};
-
+	/**
+	 * Accept word
+	 */
 	Game.prototype.accept = function(){ //enter
 		if(this.word.length < 1){
 			return;
 		}
-		if(!this._isWord(this.getWord())){
+		if(!this.isWord(this.getWord())){
 			// show message
 			this.cancel();
 			return;
@@ -109,7 +145,10 @@ define(['jquery','./scene/objects/letter'],function($,Letter){
 		this.word = [];
 		this._update();
 	};
-
+	/**
+	 * Get current word as string
+	 * @return {string} word
+	 */
 	Game.prototype.getWord = function(){
 		var s = '';
 		for(var i in this.word){
@@ -117,8 +156,12 @@ define(['jquery','./scene/objects/letter'],function($,Letter){
 		}
 		return s;
 	};
-
-	Game.prototype._isWord = function(word){
+	/**
+	 * Check if a word is legit
+	 * @param  {string}  word The word
+	 * @return {Boolean}      True, if the word was found ina  dictionary
+	 */
+	Game.prototype.isWord = function(word){
 		return true;
 	};
 
