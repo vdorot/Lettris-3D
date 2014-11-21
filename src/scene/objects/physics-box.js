@@ -1,5 +1,5 @@
-/**
- * @module shaders/default
+/***
+ * @module scene/models
  */
 
 define(['./mesh',], function(Mesh) {

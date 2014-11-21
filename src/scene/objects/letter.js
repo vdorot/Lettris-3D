@@ -1,8 +1,8 @@
-/**
+/***
  * @module scene/models
  */
 
-define(['./mesh','glMatrix','./models/models'], function(Mesh, glM, letters) {
+define(['./mesh','glMatrix','../../../models/models'], function(Mesh, glM, letters) {
 
 
 

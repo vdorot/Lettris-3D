@@ -1,5 +1,5 @@
 /**
- * @module scene/models
+ * @module scene/objects
  */
 
 
@@ -7,7 +7,9 @@ define(['glMatrix'], function(glM) {
 
 
     /**
-     * @constructor
+     * @class  Mesh
+     * @memberOf scene/objects
+     * @contructor
      */
     var Mesh = function(){
 
@@ -38,24 +40,38 @@ define(['glMatrix'], function(glM) {
         quaternion: {x:0, y:0, z:0, w: 1}
 
     };
-
+    /**
+     * Update position
+     * @param {Position} position Coordinates
+     */
     Mesh.prototype.setPosition = function(position){
         this.position.x = position.x;
         this.position.y = position.y;
         this.position.z = position.z; 
     };
 
+    /**
+     * Return current position
+     * @return {Position} coordinates
+     */
     Mesh.prototype.getPosition = function(){
         return this.position;
     };
 
+    /**
+     * Set the rotation
+     * @param {Quaternion} quaternion rotation
+     */
     Mesh.prototype.setQuaternion = function(quaternion){
         this.quaternion.x = quaternion.x;
         this.quaternion.y = quaternion.y;        
         this.quaternion.z = quaternion.z;
         this.quaternion.w = quaternion.w;
     };
-
+    /**
+     * Get the rotation
+     * @return {Quaternion} rotation
+     */
     Mesh.prototype.getQuaternion = function(){
         return this.quaternion;
     };

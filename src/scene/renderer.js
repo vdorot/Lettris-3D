@@ -1,6 +1,4 @@
-/**
- * @module scene
- */
+
 
 define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../shaders/letter/fragment','../shaders/stand/vertex','../shaders/stand/fragment'],
  function(glM,      ShaderProgram, LetterVertex, LetterFragment, StandVertex, StandFragment) {
