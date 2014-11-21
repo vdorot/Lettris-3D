@@ -11,7 +11,7 @@ define(['./physics-worker'],function(PhysicsWorker) {
 
 
 
-        this.worker = new Worker("src/_worker.js");
+        this.worker = new Worker("src/_w`orker.js");
 
         this.worker.onmessage = function(evt){
         	//console.log("message form worker",evt);
