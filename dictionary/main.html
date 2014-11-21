@@ -1,0 +1,119 @@
+ <HTML>
+<HEAD>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Beginning of JavaScript -
+
+//funkce pro ziskani znako o jednicku vyssi
+function nextChar(c){
+   return String.fromCharCode(c.charCodeAt(0) + 1);
+}
+
+var globEventCounter;
+var globDictionary;
+
+//funkce pro naceteni jednoho souboru
+//TODO jako parametr by mozna mela mit tu funkci co se ma volat
+function loadFile(letter){
+
+  //TODO tady se jeste musi hodit cesta k tomu, kde ty soubory budou ulozene...-jen upravit FILENAME_PREFIX
+  var FILENAME_PREFIX = "";
+  var FILENAME_SUFIX = " Words.csv";
+  
+  var resPre = FILENAME_PREFIX.concat(letter);
+  var resName = resPre.concat(FILENAME_SUFIX);
+
+  var txtFile = new XMLHttpRequest();
+  txtFile.open("GET", resName, true);
+  txtFile.onreadystatechange = function()
+  { 
+    if (txtFile.readyState === 4) {
+      if (txtFile.status === 200 || txtFile.status == 0) {
+        allText = txtFile.responseText;
+        globDictionary[letter] = txtFile.responseText.split("\n");
+
+        globEventCounter += 1;
+        if(globEventCounter >= 26){
+                //TODO  tady se zavola ta funkce
+            
+         alert("snad hotovo");
+
+               //TODO tohle se pak muze smazat, je to tu jen proto, ze jsem to potreboval zavolat az po inicializaci celeho pole
+               if(isValid("color")){
+               
+                 alert("FOUND");
+               }
+               else{
+                 
+                 alert("NOT FOUND");
+               }
+            }
+      
+      }
+    }
+
+  }
+  txtFile.send(null);
+   
+
+}
+
+//funkce pro nacteni vsech souboru
+//TODO jako parametr bude mit funkci, ktera se zavol po dokonceni
+function initDictionary(){
+   
+   globEventCounter = 0;
+   globDictionary;
+   globDictionary = new Array();
+   var firstLetter = 'A';
+
+  
+  while(firstLetter <= 'Z'){      
+       
+  //TODO preda se funkce jako parametr      
+  loadFile(firstLetter);     
+  firstLetter = nextChar(firstLetter);
+  }
+   
+}
+
+
+//funkce pro kontrolu slova
+function isValid(textstring){
+  
+  var resText = textstring.toLowerCase();
+  var firstLetter =  resText.charAt(0).toUpperCase();
+
+  for(var i = 0; i < globDictionary[firstLetter].length;  i++){
+    if(globDictionary[firstLetter][i] == textstring){
+       //slovo nalezeno
+       return true;
+    }
+  }  
+  return false;
+
+    
+}
+
+
+function MsgBox (textstring) {
+
+initDictionary();
+
+}
+
+// - End of JavaScript - -->
+</SCRIPT>
+
+</HEAD>
+
+
+<BODY>
+
+<FORM>
+<INPUT NAME="text1" TYPE=Text>
+<INPUT NAME="submit" TYPE=Button VALUE="Show Me" onClick="MsgBox(form.text1.value)">
+</FORM>
+
+</BODY>
+</HTML>
