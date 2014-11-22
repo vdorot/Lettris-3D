@@ -1,8 +1,8 @@
-require(['jquery','./scene/scene','./scene/renderer','./game','./scene/objects/letter','./scene/objects/physics-box','./scene/objects/stand','./scene/objects/physics-stand-bottom','./scene/objects/physics-stand-side','./fps-counter','glMatrix','./random-letter'],
-function($,         Scene,          Renderer,         Game,       Letter,                 PhysicsBox,                     Stand,                  PhysicsStandBottom,                 PhysicsStandSide,                       FpsCounter,     glM, RandomLetter) {
+require(['jquery','./scene/scene','./scene/renderer','./game','./scene/objects/letter','./scene/objects/physics-box','./scene/objects/stand','./scene/objects/physics-stand-bottom','./scene/objects/physics-stand-side','./fps-counter','glMatrix','./dictionary'],
+function($,         Scene,          Renderer,         Game,       Letter,                 PhysicsBox,                     Stand,                  PhysicsStandBottom,                 PhysicsStandSide,                       FpsCounter,     glM,  WordChecker) {
 
-// jQuery DOMReady handler - wait for html document to load
-$(function() {
+
+var ready = function() {
 
 
 
@@ -140,88 +140,6 @@ $(function() {
 
 
 
-    var randomQuat = function(){
-        //http://hub.jmonkeyengine.org/forum/topic/random-rotation/
-        
-
-        var u1 = Math.random();
-        var u2 = Math.random();
-        var u3 = Math.random();
-
-
-        var u1sqrt = Math.sqrt(u1);
-        var u1m1sqrt = Math.sqrt(1-u1);
-        var x = u1m1sqrt *Math.sin(2*Math.PI*u2);
-        var y = u1m1sqrt *Math.cos(2*Math.PI*u2);
-        var z = u1sqrt *Math.sin(2*Math.PI*u3);
-        var w = u1sqrt *Math.cos(2*Math.PI*u3);
-
-
-        return {x: x, y: y, z: z, w: w};
-                       
-    };
-
-
-    var genTimer = null;
-
-
-
-
-    var genObject = function(){
-
-
-
-            var ltr = RandomLetter.get();
-
-
-            var pos = {x:0,y: 6,z: 0 };
-
-
-            var object = new Letter(ltr);
-
-
-            object.setPosition(pos);
-
-            /*var x = Math.random*Math.PI*2;
-            var y = Math.random*Math.PI*2;
-            var z = Math.random*Math.PI*2;
-
-            var quat = glM.quat.create();
-
-            glM.quat.setAxisAngle(quat,[Math.random(),Math.ran,0],1);
-
-            glM.quat.normalize(quat,quat);
-
-            object.setQuaternion({x: quat[0], y: quat[1], z: quat[2], w: quat[3]});
-
-            //object.setQuaternion({x: 1, y: 0, z: 0, w: 1});*/
-
-            object.setQuaternion(randomQuat());
-
-
-            scene.add(Renderer.LAYER_LETTERS,object);      
-
-
-            cubeCnt++;
-            if(cubeCnt >=200){
-                clearInterval(genTimer);
-            }
-
-            /*setTimeout(function(){ return function(){
-                scene.remove(object);
-            };}(object),10000);
-*/
-
-    };
-
-        var OBJGEN_INTERVAL = 500;
-        genTimer = setInterval(genObject,OBJGEN_INTERVAL);
-
-
-
-
-
-
         var drawScene = function(){
 
 
@@ -232,7 +150,7 @@ $(function() {
 
 
 
-        var fpsElement = $(".fps");
+        var fpsElement = $("#fps");
 
         var fpsCounter = new FpsCounter();
 
@@ -276,11 +194,37 @@ $(function() {
         scene.physics.run();
 
 
-        var game = new Game(scene);
+        var game = new Game(scene, WordChecker);
 
 
+        $("#loading").remove();
+
+        var startFn = function(){
+            $("#introduction-screen").hide();
+            $("#in-game-screen").show();
+            game.start();
+
+        };
+
+        $("#start-game").click(startFn).keyup(function(evt){
+            if(evt.keyCode == 13){
+                startFn();
+            }
+        }).focus();
 
 
+        var unpauseOnFocus = false;
+
+        $(window).focus(function(){
+            if(unpauseOnFocus){
+                game.start();
+            }
+        });
+
+        $(window).blur(function(){
+            unpauseOnFocus = !game.isPaused();
+            game.pause();
+        });
 
 
         $(document).keydown(function(evt){
@@ -310,17 +254,25 @@ $(function() {
                 game.back();
             }
 
-            if(evt.ctrlKey && evt.keyCode == 'P'.charCodeAt()){ //pause game
+            if(evt.ctrlKey && evt.keyCode == 'P'.charCodeAt(0)){ //pause game
                 evt.preventDefault(); // don't print page
-                if(scene.physics.running){
-                    scene.physics.pause();
-                    clearInterval(genTimer);
-                    genTimer = null;
+                if(game.isPaused()){
+                    game.start();
                 }else{
-                    scene.physics.run();
-                    genTimer = setInterval(genObject,OBJGEN_INTERVAL);
+                    game.pause();
                 }
 
+            }
+
+            if(evt.ctrlKey && evt.keyCode == "H".charCodeAt(0)){
+                evt.preventDefault();
+                var objects = scene.getObjects();
+                for(var i in objects){
+                    if(objects[i] instanceof Letter){
+                        var letterObj = objects[i];
+                        console.log(letterObj.getPosition().y);
+                    }
+                }   
             }
 
 
@@ -331,6 +283,13 @@ $(function() {
 
 
 
+};
+
+
+$(function(){
+    WordChecker.init(function(){
+        ready();
+    });
 });
 
 

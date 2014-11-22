@@ -39,7 +39,7 @@ function loadFile(letter){
          alert("snad hotovo");
 
                //TODO tohle se pak muze smazat, je to tu jen proto, ze jsem to potreboval zavolat az po inicializaci celeho pole
-               if(isValid("dth")){
+               if(isValid("color")){
                
                  alert("FOUND");
                }
@@ -60,23 +60,18 @@ function loadFile(letter){
 
 //funkce pro nacteni vsech souboru
 //TODO jako parametr bude mit funkci, ktera se zavol po dokonceni
-function initDictionary(done){
+function initDictionary(){
    
-  var eventCnt = 0;
+   globEventCounter = 0;
+   globDictionary;
+   globDictionary = new Array();
+   var firstLetter = 'A';
 
-  var firstLetter = 'A';
-
-  var fn = function(){
-    eventCnt++;
-    if(eventCnt == ('Z'.charCodeAt(0) - 'A'.charCodeAt(0) + 1)){
-      done();
-    }
-  }; 
   
   while(firstLetter <= 'Z'){      
        
-
-  loadFile(firstLetter,fn);     
+  //TODO preda se funkce jako parametr      
+  loadFile(firstLetter);     
   firstLetter = nextChar(firstLetter);
   }
    

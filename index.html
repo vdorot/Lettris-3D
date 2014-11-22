@@ -8,18 +8,76 @@
 
 <body>
 
+
+<div id="loading">o</div>
+
 <div id="wrapper">
   <canvas id="canvas"></canvas>
+  <div id="sidebar">
+  	<div class="box">
+  		<div class="boxpadding">
+  			<div id="in-game-screen">
+	  			<div class="typed-word"><span id="word"></span></div>
+
+	  			<div id="game-status" class="game-status">
+		        	<span id="paused">PAUSED</span>
+	  			</div>
+	  			<div class="score">
+	  				<h2>Score:</h2>
+	  				<div id="score"></div>
+	  			</div>
+
+  			</div>
+
+  			<div id="introduction-screen">
+	  				<div class="info">
+	  					Don't let the jar overflow!<br> Type in words to eliminate letters.
+	  					<div class="button">
+	  					<button id="start-game">START GAME</button>
+	  					</div>
+	  				</div>
+  			</div>
+
+
+
+	        <div id="score"></div>
+	        <div class="controls">
+	        <h2>Controls:</h2>
+	        <table>
+	        	<tr><td><span class="kbd">[A-Z]</span></td><td>&nbsp;</td></tr>
+	        	<tr><td><span class="kbd">[Enter]</span></td><td> submit word</td></tr>
+	        	<tr><td><span class="kbd">[Backspace]</span></td><td> works as usual</td></tr>
+	        	<tr><td><span class="kbd">[Escape]</span></td><td> cancel word</td></tr>
+	        	<tr><td><span class="kbd">[Ctrl+P]</span></td><td> Pause/resume game</td></tr>
+	        </table>
+	        </div>
+	    </div>
+    </div>
+
+  </div>
 </div>
 
     <footer>
-    <div>FPS: <span class="fps"></span></div>
-        PGR-projekt
-        <div class="help">HELP: type in a word, then press [enter] to remove the letters. [backspace] works as usual, [escape] cancels the whole word.<br />Pause: [Ctrl + P]</div>
+    	<div class="fps">FPS: <span id="fps"></span></div>
+        <div class="info">PGR project at <a href="http://www.fit.vutbr.cz">FIT BUT</a></div>
+        <div class="authors">
+        	Viktor Dorotovič, Gabriel Lehocký, Tomáš Lengál
+        </div>
 
-        <div id="word"></div>
+<!--
+	Technology: 
+	WebGL, custom scene graph
+	Models from blender, using three.js export plugin and a custo import script
+	Physics - Ammo.js, which is the Bullet physics engine compiled to asm.js using Emscripten
+			The engine is run in a background thread - Web Worker
+	jQuery for UI stuff
+	
+
+	Loading gif by http://www.loadinfo.net/
+-->
 
     </footer>
+
 
 </body>
 

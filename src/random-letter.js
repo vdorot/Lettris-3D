@@ -1,10 +1,9 @@
 define([],function(){
 
 
-
-	return {get: function(){
-
         //http://en.wikipedia.org/wiki/Letter_frequency
+
+
 
         var letterProb = {
             'a': 8.167,
@@ -36,14 +35,25 @@ define([],function(){
         };
 
 
+
+	var getSum = function(){
         var sum = 0;
 
         for(var i in letterProb){
             sum += letterProb[i];
         }
+        return sum;
+	};
 
+	var letterScore = function(letter){
+		var sum = getSum();
+		var letterFreq = letterProb[letter];
+		var score = (sum / 5) - letterFreq;
+		return score;
+	};
 
-        var rand = Math.random()*sum;
+	var get = function(){
+        var rand = Math.random()*getSum();
 
         var ltr = 'a';
 
@@ -56,7 +66,8 @@ define([],function(){
         }
 
         return ltr;
+	};
 
-		
-	}};
+
+	return {get: get, letterScore: letterScore};
 });
