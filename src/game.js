@@ -25,13 +25,15 @@ define(['jquery','./letter-generator','./random-letter','./scene/objects/letter'
 		this.letterGenerator = new LetterGenerator(scene);
 
 
+		this.minPeriod = 400;
+
 		var self = this;
 
 		this.letterGenerator.everySecond(function(generator,period){
 
 			var diff = -4;
 
-			var newPeriod = Math.max(400,period+diff);
+			var newPeriod = Math.max(self.minPeriod,period+diff);
 
 			generator.setPeriod(newPeriod);
 
@@ -64,6 +66,11 @@ define(['jquery','./letter-generator','./random-letter','./scene/objects/letter'
         this.letterGenerator.pause();
         this.paused = true;
         $("#game-status").css("visibility",'visible');
+	};
+
+	Game.prototype.faster = function(){
+		this.minPeriod = 300;
+		this.letterGenerator.setPeriod(300);
 	};
 
 	Game.prototype.isPaused = function(){

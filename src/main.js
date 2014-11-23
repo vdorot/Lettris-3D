@@ -264,6 +264,12 @@ var ready = function() {
 
             }
 
+            if(evt.ctrlKey && evt.keyCode == 'F'.charCodeAt(0)){ //pause game
+                evt.preventDefault();
+                game.faster();
+
+            }
+
             if(evt.ctrlKey && evt.keyCode == "H".charCodeAt(0)){
                 evt.preventDefault();
                 var objects = scene.getObjects();
