@@ -3,7 +3,11 @@ attribute vec3 aVertexNormal;
 attribute vec2 aVertexUV;
 attribute lowp float aVertexSide;
 
+<<<<<<< HEAD
 uniform lowp vec3 uLetterColor;
+=======
+uniform lowp vec3 uColor;
+>>>>>>> origin/master
 
 uniform mat4 uModelMatrix;
 uniform mat4 uProjectionMatrix;
@@ -21,6 +25,7 @@ void main(void) {
 
     lowp vec3 faceColor;
 
+<<<<<<< HEAD
     if(uLetterColorR == 1.0){
         if(aVertexSide == 0.0){ //side of letter
         	faceColor = uLetterColor;
@@ -35,6 +40,17 @@ void main(void) {
             faceColor = vec3(0,0.1,0.9);
         }
     }
+=======
+    /*if(aVertexSide == 0.0){ //side of letter
+    	faceColor = vec3(uLetterColorR*0.9999,uLetterColorG*0.9999,uLetterColorB*0.9999);
+    }else if(aVertexSide > 0.0){
+    	faceColor = vec3(uLetterColorR,uLetterColorG,uLetterColorB);
+    }else{
+    	faceColor = vec3(uLetterColorR,uLetterColorG,uLetterColorB);
+    }*/
+
+    faceColor = uColor;
+>>>>>>> origin/master
 
     if(uHighlighted == 1.0){
         if(aVertexSide == 0.0){ //side of letter
@@ -55,6 +71,7 @@ void main(void) {
     faceColor = faceColor + 0.0*aVertexNormal; //prevent aVertexNormal from being optimised away
 
     vColor = vec4(faceColor,1.0);
+    //vColor = vec4(color,1.0);
 
     vTextureCoord = aVertexUV;
 }
