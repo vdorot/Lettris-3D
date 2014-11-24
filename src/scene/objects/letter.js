@@ -27,11 +27,11 @@ define(['./mesh','glMatrix','../../../models/models'], function(Mesh, glM, lette
         this.highlighted = false;
         this.selected = false;
 
-        var i = Math.floor(Math.random() * (10));
+        //var i = Math.floor(Math.random() * (10));
 
-        this.letterColorR = letterColors[i][1];
-        this.letterColorG = letterColors[i][2];
-        this.letterColorB = letterColors[i][3];
+        this.uniforms.letterColorR = 0.929;//letterColors[2][1];
+        this.uniforms.letterColorG = 0.490;//letterColors[2][2];
+        this.uniforms.letterColorB = 0.482;//letterColors[2][3];
     };
 
     Letter.prototype = Object.create(Mesh.prototype);
@@ -179,11 +179,11 @@ define(['./mesh','glMatrix','../../../models/models'], function(Mesh, glM, lette
 
 
         var colorRLoc = shaderProgram.getUniformLocation(this.uniforms.uLetterColorR);        
-        gl.uniform1f(colorRLoc, this.uniforms.letterColorR);
+        gl.uniform3vf(colorRLoc, this.uniforms.letterColorR);
         var colorGLoc = shaderProgram.getUniformLocation(this.uniforms.uLetterColorG);        
-        gl.uniform1f(colorGLoc, this.uniforms.letterColorG);
+        gl.uniform3vf(colorGLoc, this.uniforms.letterColorG);
         var colorBLoc = shaderProgram.getUniformLocation(this.uniforms.uLetterColorB);        
-        gl.uniform1f(colorBLoc, this.uniforms.letterColorB);
+        gl.uniform3vf(colorBLoc, this.uniforms.letterColorB);
 
     
         gl.drawArrays(gl.TRIANGLES, 0, this.models[this.letter].vertices.length / 3);
