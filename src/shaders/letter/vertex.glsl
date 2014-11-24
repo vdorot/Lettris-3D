@@ -3,11 +3,7 @@ attribute vec3 aVertexNormal;
 attribute vec2 aVertexUV;
 attribute lowp float aVertexSide;
 
-<<<<<<< HEAD
-uniform lowp vec3 uLetterColor;
-=======
 uniform lowp vec3 uColor;
->>>>>>> origin/master
 
 uniform mat4 uModelMatrix;
 uniform mat4 uProjectionMatrix;
@@ -25,32 +21,12 @@ void main(void) {
 
     lowp vec3 faceColor;
 
-<<<<<<< HEAD
-    if(uLetterColorR == 1.0){
-        if(aVertexSide == 0.0){ //side of letter
-        	faceColor = uLetterColor;
-        }else{
-        	faceColor = uLetterColor;
-        }
-    }
-    else{
-        if(aVertexSide == 0.0){ //side of letter
-            faceColor = vec3(0,0.15,0.95);
-        }else{
-            faceColor = vec3(0,0.1,0.9);
-        }
-    }
-=======
-    /*if(aVertexSide == 0.0){ //side of letter
-    	faceColor = vec3(uLetterColorR*0.9999,uLetterColorG*0.9999,uLetterColorB*0.9999);
-    }else if(aVertexSide > 0.0){
-    	faceColor = vec3(uLetterColorR,uLetterColorG,uLetterColorB);
+    if(aVertexSide == 0.0){ //side of letter
+    	faceColor = uColor;
     }else{
-    	faceColor = vec3(uLetterColorR,uLetterColorG,uLetterColorB);
-    }*/
-
-    faceColor = uColor;
->>>>>>> origin/master
+    	faceColor = uColor;
+    }
+    
 
     if(uHighlighted == 1.0){
         if(aVertexSide == 0.0){ //side of letter
