@@ -1,5 +1,5 @@
-require(['jquery','./scene/scene','./scene/renderer','./game','./scene/objects/letter','./scene/objects/physics-box','./scene/objects/stand','./scene/objects/physics-stand-bottom','./scene/objects/physics-stand-side','./fps-counter','glMatrix','./dictionary'],
-function($,         Scene,          Renderer,         Game,       Letter,                 PhysicsBox,                     Stand,                  PhysicsStandBottom,                 PhysicsStandSide,                       FpsCounter,     glM,  WordChecker) {
+require(['jquery','./scene/scene','./scene/renderer','./game','./scene/objects/letter','./scene/objects/physics-box','./scene/objects/ground','./scene/objects/stand','./scene/objects/physics-stand-bottom','./scene/objects/physics-stand-side','./fps-counter','glMatrix','./dictionary'],
+function($,         Scene,          Renderer,         Game,       Letter,                 PhysicsBox,                 Ground,                   Stand,                  PhysicsStandBottom,                 PhysicsStandSide,                       FpsCounter,     glM,  WordChecker) {
 
 
 var ready = function() {
@@ -105,6 +105,8 @@ var ready = function() {
     scene.add(Renderer.LAYER_STAND,standBottom);
 
 
+    var ground = new Ground();
+    scene.add(Renderer.LAYER_STAND,ground);
 
 
     for(var  i=0;i<6;i++){
