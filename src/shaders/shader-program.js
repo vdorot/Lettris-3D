@@ -107,6 +107,7 @@ define([], function() {
             this.__attribLoc[name] = loc;
 
         }
+
         return this.__attribLoc[name];        
     };
 
