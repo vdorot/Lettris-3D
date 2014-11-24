@@ -22,7 +22,7 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
 
         this.letterShader = new ShaderProgram(gl, new LetterVertex(), new LetterFragment());
 
-        this.standShader = new ShaderProgram(gl, new StandVertex(), new StandFragment());
+        this.standShader = new ShaderProgram(gl, new StandVertex(), new LetterFragment());
 
     };
 
@@ -49,7 +49,7 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         gl.enable(gl.DEPTH_TEST);                               // Enable depth testing
         gl.depthFunc(gl.LEQUAL);                                // Near things obscure far things
 
-        gl.clearColor(0.3, 0.3, 0.3, 1.0);                      // Set clear color to black, fully opaque
+        //gl.clearColor(0.3, 0.3, 0.3, 1.0);                      // Set clear color to black, fully opaque
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);      // Clear the color as well as the depth buffer.
 
         var point = glM.vec3.fromValues(0,5,4);

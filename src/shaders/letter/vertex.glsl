@@ -20,19 +20,31 @@ void main(void) {
     lowp vec3 faceColor;
 
     if(aVertexSide == 0.0){ //side of letter
-    	faceColor = vec3(0.8,0.8,0.8);
+    	faceColor = vec3(0,0.1,0.9);
     }else if(aVertexSide > 0.0){
-    	faceColor = vec3(1,0,0);
+    	faceColor = vec3(0,0.1,1);
     }else{
-    	faceColor = vec3(0,0,1);
+    	faceColor = vec3(0,0.1,1);
     }
 
     if(uHighlighted == 1.0){
-        faceColor = vec3(1,1,1);
+        if(aVertexSide == 0.0){ //side of letter
+            faceColor = vec3(0,0.05,0.6);
+        }else if(aVertexSide > 0.0){
+            faceColor = vec3(0,0.05,0.5);
+        }else{
+            faceColor = vec3(0,0.05,0.5);
+        }
     }
 
     if(uSelected == 1.0){
-        faceColor = vec3(1,1,0);
+        if(aVertexSide == 0.0){ //side of letter
+            faceColor = vec3(0.5,0.05,0.6);
+        }else if(aVertexSide > 0.0){
+            faceColor = vec3(0.5,0.05,0.5);
+        }else{
+            faceColor = vec3(0.5,0.05,0.5);
+        }
     }
 
     faceColor = faceColor + 0.0*aVertexNormal; //prevent aVertexNormal from being optimised away
