@@ -19,7 +19,7 @@ void main(void) {
     if(aVertexSide == 0.0){ //side of letter
     	faceColor = vec3(0.8,0.8,0.8);
     }else{
-    	faceColor = vec3(0.8,0.1,0.1);
+    	faceColor = vec3(0.1,0.4,0.8);
     }
 
     faceColor = faceColor + 0.0*aVertexNormal; //prevent aVertexNormal from being optimised away

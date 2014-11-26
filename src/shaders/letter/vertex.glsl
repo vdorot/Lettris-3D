@@ -22,25 +22,28 @@ void main(void) {
     lowp vec3 faceColor;
 
     if(aVertexSide == 0.0){ //side of letter
-    	faceColor = uColor;
-    }else{
-    	faceColor = uColor;
+        faceColor = vec3(uColor[0]*0.85,uColor[1]*0.85,uColor[2]*0.85);
+    }
+    else{
+    	faceColor = vec3(uColor[0],uColor[1],uColor[2]);
     }
     
 
     if(uHighlighted == 1.0){
         if(aVertexSide == 0.0){ //side of letter
-            faceColor = vec3(0,0.05,0.6);
-        }else{
-            faceColor = vec3(0,0.05,0.5);
+            faceColor = vec3(uColor[0]*1.4,uColor[1]*1.4,uColor[2]*1.4);
+        }
+        else{
+            faceColor = vec3(uColor[0]*1.45,uColor[1]*1.45,uColor[2]*1.45);
         }
     }
 
     if(uSelected == 1.0){
         if(aVertexSide == 0.0){ //side of letter
-            faceColor = vec3(0.5,0.05,0.6);
-        }else{
-            faceColor = vec3(0.5,0.05,0.5);
+            faceColor = vec3(uColor[0]*1.8,uColor[1]*1.8,uColor[2]*1.8);
+        }
+        else{
+            faceColor = vec3(uColor[0]*1.9,uColor[1]*1.9,uColor[2]*1.9);
         }
     }
 

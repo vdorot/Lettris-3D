@@ -86,6 +86,10 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         gl.uniformMatrix4fv(uniformLoc, false, perspectiveMatrix); // modify uniform 4x4 matrix
 
 
+        var resolutionLoc = this.letterShader.getUniformLocation("uRes");
+
+        gl.uniform2fv(resolutionLoc, new Float32Array([this.viewportWidth, this.viewportHeight]));
+
         this.scene.renderLayer(this.gl, Renderer.LAYER_LETTERS,this.letterShader);
 
 
@@ -96,9 +100,11 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         
         gl.uniformMatrix4fv(uniformLoc, false, perspectiveMatrix); // modify uniform 4x4 matrix
 
+        resolutionLoc = this.standShader.getUniformLocation("uRes");
+
+        gl.uniform2fv(resolutionLoc, new Float32Array([this.viewportWidth, this.viewportHeight]));
 
         this.scene.renderLayer(this.gl, Renderer.LAYER_STAND,this.standShader);
-
 
 
     };

@@ -26,7 +26,7 @@ define(['./mesh','glMatrix','../../textures/marble'], function(Mesh, glM, Marble
     -50, 0.0,  -50.0,
      50.0, 0.0,  -50.0,
      50.0, 0.0,  50.0,
-    -50.0, 0.0,  50.0,
+    -50.0, 0.0,  50.0
   ];
 
 
@@ -34,21 +34,21 @@ define(['./mesh','glMatrix','../../textures/marble'], function(Mesh, glM, Marble
         0.0,  1.0,  0.0,  1.0,
         0.0,  1.0,  0.0,  1.0,
         0.0,  1.0,  0.0,  1.0,
-        0.0,  1.0,  0.0,  1.0,
+        0.0,  1.0,  0.0,  1.0
     ];
 
     Ground.prototype.uvs = [
         0,0,
         0,100,
         100,100,
-        0,100,
+        0,100
     ];
 
     Ground.prototype.sides = [
+        0.15,
+        0.15,
         0,
-        0,
-        0,
-        0,
+        0
     ];
 
 
