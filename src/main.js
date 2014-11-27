@@ -1,5 +1,5 @@
-require(['jquery','./scene/scene','./scene/renderer','./game','./scene/objects/letter','./scene/objects/physics-box','./scene/objects/ground','./scene/objects/stand','./scene/objects/physics-stand-bottom','./scene/objects/physics-stand-side','./fps-counter','glMatrix','./dictionary'],
-function($,         Scene,          Renderer,         Game,       Letter,                 PhysicsBox,                 Ground,                   Stand,                  PhysicsStandBottom,                 PhysicsStandSide,                       FpsCounter,     glM,  WordChecker) {
+require(['jquery','./scene/scene','./scene/renderer','./game','./scene/objects/letter','./scene/objects/physics-box','./scene/objects/ground','./scene/objects/stand','./scene/objects/physics-stand-bottom','./scene/objects/physics-stand-side','./scene/objects/stand-side','./fps-counter','glMatrix','./dictionary'],
+function($,         Scene,          Renderer,         Game,       Letter,                 PhysicsBox,                 Ground,                   Stand,                  PhysicsStandBottom,                     PhysicsStandSide,                             StandSide,                  FpsCounter,     glM,  WordChecker) {
 
 
 var ready = function() {
@@ -108,6 +108,7 @@ var ready = function() {
     var ground = new Ground();
     scene.add(Renderer.LAYER_STAND,ground);
 
+    scene.addLayer(Renderer.LAYER_GLASS);
 
     for(var  i=0;i<6;i++){
 
@@ -115,11 +116,20 @@ var ready = function() {
 
         glM.quat.setAxisAngle(quat,[0,1,0],Math.PI*2/6*i);
 
-        var standSide = new PhysicsStandSide();
+        var standSide = new StandSide();
 
         standSide.setQuaternion({x:quat[0],y:quat[1],z:quat[2],w:quat[3]});
 
-        scene.add(Renderer.LAYER_STAND,standSide);
+        scene.add(Renderer.LAYER_GLASS,standSide);
+
+
+
+        var physicsStandSide = new PhysicsStandSide();
+
+
+        physicsStandSide.setQuaternion({x:quat[0],y:quat[1],z:quat[2],w:quat[3]});
+
+        scene.add(Renderer.LAYER_STAND,physicsStandSide);
 
 
     }

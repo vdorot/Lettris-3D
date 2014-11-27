@@ -129,6 +129,21 @@ define(['./physics/physics'],
     };
 
     /**
+     * Get objects for layer
+     * @param  {string} layer Layer identifier
+     * @return {Array.<Mesh>} Objects
+     */
+    Scene.prototype.getObjectsByLayer = function(layer){
+        layer = this.layerIndex[layer];
+
+        if(layer === undefined){
+            return null;
+        }
+
+        return layer.objects;
+    };
+
+    /**
      * Render all layers and objects
      * @param  {WebGLRenderingContext} gl WebGL context
      * @param {string} layer Layer identifier

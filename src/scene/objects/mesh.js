@@ -117,6 +117,9 @@ define(['glMatrix'], function(glM) {
         if(!this.__buffers || !this.__buffers[name]){
             var buffer = gl.createBuffer(); 
             gl.bindBuffer(gl.ARRAY_BUFFER, buffer); 
+            if(!(data instanceof Float32Array)){
+                data = new Float32Array(data);
+            }
             gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);     
             this.__buffers[name] = buffer;
         }

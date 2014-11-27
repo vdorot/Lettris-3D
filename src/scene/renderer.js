@@ -30,6 +30,8 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
 
     Renderer.LAYER_STAND = 'stand';
 
+    Renderer.LAYER_GLASS = 'glass';
+
 
     Renderer.prototype.updateViewport = function(width, height){
         this.viewportWidth = width;
@@ -105,6 +107,35 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         gl.uniform2fv(resolutionLoc, new Float32Array([this.viewportWidth, this.viewportHeight]));
 
         this.scene.renderLayer(this.gl, Renderer.LAYER_STAND,this.standShader);
+
+
+        //TODO: this.glassShader.use();
+        
+        var transparentObjects = this.scene.getObjectsByLayer(Renderer.LAYER_GLASS);
+
+
+
+        //###########
+        //Z-SORTING (pseudocode):
+        //###########
+        //for each transparent object:
+        //
+        //objMatrix =  object.getMatrix()
+        //
+        //resultMatrix = perspectiveMatrix * objMatrix // using glM.mat4.multiply
+        //
+        //avgVertex = average of object vertices
+        //
+        //object.screenCoords = apply resultMatrix to avgVertex
+        //
+        //
+        //sort objects by screencoords.z // using transparentObjects = transparentObjects.sort(comparatorFunction); //http://www.w3schools.com/jsref/jsref_sort.asp
+
+        for(var i in transparentObjects){
+            var obj = transparentObjects[i];
+            obj.render(this.gl, this.standShader);
+        }
+
 
 
     };

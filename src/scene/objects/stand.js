@@ -19,6 +19,7 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
 
     Stand.prototype.model = Models.stand;
 
+    console.log(Models.stand);
 
     Stand.prototype.texture = new MarbleTexture();
 

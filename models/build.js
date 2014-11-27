@@ -59,13 +59,17 @@ var stand = (JSON.parse(fs.readFileSync("./_stand.js", "utf8")));
 var bottom = (JSON.parse(fs.readFileSync("./_physics_bottom.js", "utf8"))); 
 
 
-var side = (JSON.parse(fs.readFileSync("./_physics_side.js", "utf8"))); 
+var physicsSide = (JSON.parse(fs.readFileSync("./_physics_side.js", "utf8"))); 
+
+var side = (JSON.parse(fs.readFileSync("./_side.js", "utf8"))); 
 
 stand = getModel(stand);
 
 
 stand.physicsBottom = getHull(bottom);
-stand.physicsSide = getHull(side);
+stand.physicsSide = getHull(physicsSide);
+
+stand.side = getModel(side);
 
 result.stand = stand;
 
@@ -162,7 +166,7 @@ function getModel(model){
 		//console.log(f[i]);
 
 		if(f[i] != 42 ){
-			console.error("NOT 42");
+			console.error("NOT 42, ",f[i]);
 			return;
 		}
 

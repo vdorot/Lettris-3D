@@ -62,19 +62,6 @@ define(['./mesh','glMatrix','../../../models/models'], function(Mesh, glM, lette
     };
 
 
-    for(var i in letters){
-
-
-        //prebuild Float32Array        
-
-        var l = letters[i];
-
-        l.vertices = new Float32Array(l.vertices);
-        l.uvs = new Float32Array(l.uvs);
-        l.sides = new Float32Array(l.sides);
-        l.normals = new Float32Array(l.normals);
-
-    }
 
     Letter.prototype.models = letters;
 
