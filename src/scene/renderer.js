@@ -87,7 +87,6 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         
         gl.uniformMatrix4fv(uniformLoc, false, perspectiveMatrix); // modify uniform 4x4 matrix
 
-
         var resolutionLoc = this.letterShader.getUniformLocation("uRes");
 
         gl.uniform2fv(resolutionLoc, new Float32Array([this.viewportWidth, this.viewportHeight]));
@@ -135,8 +134,6 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
             var obj = transparentObjects[i];
             obj.render(this.gl, this.standShader);
         }
-
-
 
     };
 
