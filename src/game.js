@@ -22,7 +22,10 @@ define(['jquery','./letter-generator','./random-letter','./scene/objects/letter'
 
 		this.paused = true;
 
-		this.letterGenerator = new LetterGenerator(scene);
+		this.startingPeriod = 2000;
+
+		this.letterGenerator = new LetterGenerator(scene,this.defaultPeriod);
+
 
 
 		this.minPeriod = 400;
@@ -41,6 +44,10 @@ define(['jquery','./letter-generator','./random-letter','./scene/objects/letter'
 
 		});
 
+		$("#reset-game-button").click(function(){
+			self.reset();
+		});
+
 
 		this.score = 0;
 
@@ -55,6 +62,8 @@ define(['jquery','./letter-generator','./random-letter','./scene/objects/letter'
         this.letterGenerator.start();
         this.paused = false;
         $("#game-status").css("visibility",'hidden');
+        $("#reset-game").css("display","none");
+		$("#paused").text("PAUSED").removeClass("overflow");
         this._update();
 	};
 
@@ -92,15 +101,36 @@ define(['jquery','./letter-generator','./random-letter','./scene/objects/letter'
 
 		this.over = true;
         $("#game-status").css("visibility",'visible');
-		$("#paused").text("OVERFLOW").css({opacity: 0});
+		$("#paused").text("OVERFLOW").addClass("overflow");
 
-		var animFn = function(){
-			$("#paused").animate({opacity: 1},500,'swing').animate({opacity: 0},500,'swing',animFn);
-		};
 
+		$("#reset-game").css("display","block");
+		$("#typed-word").css("display","none");
 		animFn();
 
 
+	};
+
+
+	Game.prototype.removeLetters = function(){
+		var objects = this.scene.getObjects().slice(); //slice = copy array
+		for(var i in objects){
+			if(objects[i] instanceof Letter){
+				var letterObj = objects[i];
+				this.scene.remove(letterObj);
+			}
+		}
+	};
+
+	Game.prototype.reset = function(){
+		this.letterGenerator.setPeriod(this.startingPeriod);
+		$("#paused").stop();
+		$("#game-status").css("visibility",'hidden');
+		$("#typed-word").css("display","block");
+		this.removeLetters();
+		this.over = false;
+		this.score = 0;
+		this.start();
 	};
 
 	/**

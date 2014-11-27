@@ -215,6 +215,7 @@ var ready = function() {
             $("#introduction-screen").hide();
             $("#in-game-screen").show();
             game.start();
+            gameStarted = true;
 
         };
 
@@ -227,16 +228,23 @@ var ready = function() {
 
         var unpauseOnFocus = false;
 
+        var gameStarted = false;
+
         $(window).focus(function(){
-            if(unpauseOnFocus){
+            if(gameStarted && unpauseOnFocus){
                 game.start();
             }
         });
 
         $(window).blur(function(){
+            if(!gameStarted){
+                return false;
+            }
+
             unpauseOnFocus = !game.isPaused();
             game.pause();
         });
+
 
 
         $(document).keydown(function(evt){
@@ -268,6 +276,9 @@ var ready = function() {
 
             if(evt.ctrlKey && evt.keyCode == 'P'.charCodeAt(0)){ //pause game
                 evt.preventDefault(); // don't print page
+                if(!gameStarted){
+                    return;
+                }
                 if(game.isPaused()){
                     game.start();
                 }else{
@@ -276,13 +287,16 @@ var ready = function() {
 
             }
 
-            if(evt.ctrlKey && evt.keyCode == 'F'.charCodeAt(0)){ //pause game
+            if(evt.ctrlKey && evt.keyCode == 'F'.charCodeAt(0)){ //faster
                 evt.preventDefault();
+                if(!gameStarted){
+                    return;
+                }
                 game.faster();
 
             }
 
-            if(evt.ctrlKey && evt.keyCode == "H".charCodeAt(0)){
+            if(evt.ctrlKey && evt.keyCode == "D".charCodeAt(0)){
                 evt.preventDefault();
                 var objects = scene.getObjects();
                 for(var i in objects){

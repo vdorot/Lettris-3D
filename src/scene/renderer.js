@@ -137,7 +137,6 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         }
 
 
-
     };
 
 
