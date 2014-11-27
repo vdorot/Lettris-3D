@@ -112,7 +112,6 @@ h2{
 }
 
 .game-status{
-    margin-top: 40px;
     height: 40px;
     line-height: 40px;
     background-color: #FFDBDB;  
@@ -154,12 +153,11 @@ footer #fps{
     font-weight: bold;
 }
 
-#introduction-screen .button{
+ .button{
     text-align: center;
     margin-top: 20px;
 }
-
-#introduction-screen button{
+.button button{
     height: 40px;
     font-size: 16px;
     padding-left: 20px;
@@ -169,4 +167,27 @@ footer #fps{
     margin-right: auto;
 }
 
+#reset-game{
+    display: none;
+}
 
+#typed-word{
+    margin-bottom: 40px;
+}
+
+@keyframes blink {  
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-webkit-keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+#paused.overflow {
+    -webkit-animation: blink 1s ease infinite;
+    -moz-animation: blink 1s ease infinite;
+    animation: blink 1s ease infinite;
+}

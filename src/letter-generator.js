@@ -88,6 +88,7 @@ define(['./scene/renderer', './random-letter', './scene/objects/letter'], functi
 		var self = this;
 		this.timer = setTimeout(function(){self.tick();},this.period);
 		this.generateLetter();
+		console.log("generator tick");
 	};
 
 	LetterGenerator.prototype.secondTick = function(){
