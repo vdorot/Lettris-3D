@@ -56,7 +56,7 @@ define(['./mesh','glMatrix','../../../models/models'], function(Mesh, glM, lette
     return true;
   }
     
-    var letterColors = [
+   /* var letterColors = [
         [0.929411, 0.490196, 0.482352], // red
         [0.815686, 0.521568, 0.968627], // pink
         [0.572549, 0.482352, 0.929411], // purple
@@ -68,6 +68,33 @@ define(['./mesh','glMatrix','../../../models/models'], function(Mesh, glM, lette
         [0.929411, 0.929411, 0.482352], // yellow
         [0.929411, 0.764705, 0.482352]  // orange
     ];
+*/
+
+    //0 <= h, s, v <= 1
+    function HSVtoRGB(h, s, v) {
+        var r, g, b, i, f, p, q, t;
+        i = Math.floor(h * 6);
+        f = h * 6 - i;
+        p = v * (1 - s);
+        q = v * (1 - f * s);
+        t = v * (1 - (1 - f) * s);
+        switch (i % 6) {
+            case 0: r = v; g = t; b = p; break;
+            case 1: r = q; g = v; b = p; break;
+            case 2: r = p; g = v; b = t; break;
+            case 3: r = p; g = q; b = v; break;
+            case 4: r = t; g = p; b = v; break;
+            case 5: r = v; g = p; b = q; break;
+        }
+        return {
+            r: r,
+            g: g,
+            b: b
+        };
+    }
+
+
+
 
     /**
      * @constructor
@@ -81,7 +108,13 @@ define(['./mesh','glMatrix','../../../models/models'], function(Mesh, glM, lette
 
         var i = Math.floor(Math.random() * (10));
 
-        this.color = new Float32Array(letterColors[i]);
+        //this.color = new Float32Array(letterColors[i]);
+
+        var hue = 'z'.charCodeAt(0) - this.letter.charCodeAt(0) / ('z'.charCodeAt(0) - 'a'.charCodeAt(0));
+
+        var rgbColor = HSVtoRGB(hue,0.4,1);
+        this.color = new Float32Array([rgbColor.r, rgbColor.g, rgbColor.b]);
+
     };
 
     Letter.prototype = Object.create(Mesh.prototype);
@@ -220,8 +253,10 @@ define(['./mesh','glMatrix','../../../models/models'], function(Mesh, glM, lette
         var normalMatrixLoc = shaderProgram.getUniformLocation(this.uniforms.normalMatrix);
         var modelMatrixInv = new Float32Array(16);
         var normalMatrix = new Float32Array(16);
+
         mat4Invert(this.getMatrix(), modelMatrixInv);
         mat4Transpose(modelMatrixInv, normalMatrix);
+
         gl.uniformMatrix4fv(normalMatrixLoc, false, normalMatrix);
 
     
