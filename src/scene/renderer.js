@@ -54,7 +54,12 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         //gl.clearColor(0.3, 0.3, 0.3, 1.0);                      // Set clear color to black, fully opaque
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);      // Clear the color as well as the depth buffer.
 
-        var point = glM.vec3.fromValues(0,5,4);
+
+        var cameraPosition = [0,5,4];
+        var lightPosition = [2,4,2];
+
+        var c = cameraPosition;
+        var point = glM.vec3.fromValues(c[0],c[1],c[2]);
 
 
         var mat = glM.mat4.create();
@@ -66,7 +71,12 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         glM.vec3.transformMat4(point,point,mat);
 
 
+        var l = glM.vec3.create();
+        glM.vec3.transformMat4(l,lightPosition,mat);
+
+
         var viewMatrix = glM.mat4.create();
+
 
         glM.mat4.lookAt(viewMatrix,point,[0,1.5,0],[0,1,0]);
 
@@ -77,6 +87,15 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         glM.mat4.perspective(perspectiveMatrix, 45, this.viewportWidth / this.viewportHeight, 0.1, 100);
 
         glM.mat4.multiply(perspectiveMatrix, perspectiveMatrix,viewMatrix);
+
+
+
+
+
+
+        var lightPos = new Float32Array(l);
+
+
 
 
         this.letterShader.use();
@@ -91,7 +110,16 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
 
         gl.uniform2fv(resolutionLoc, new Float32Array([this.viewportWidth, this.viewportHeight]));
 
+        var lightPosLoc = this.letterShader.getUniformLocation("uLightPos");
+        console.log(lightPosLoc);
+        gl.uniform3fv(lightPosLoc, lightPos);
+
+
+
+
+
         this.scene.renderLayer(this.gl, Renderer.LAYER_LETTERS,this.letterShader);
+
 
 
 
@@ -104,6 +132,12 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         resolutionLoc = this.standShader.getUniformLocation("uRes");
 
         gl.uniform2fv(resolutionLoc, new Float32Array([this.viewportWidth, this.viewportHeight]));
+
+        lightPosLoc = this.standShader.getUniformLocation("uLightPos");
+        gl.uniform3fv(lightPosLoc, lightPos);
+
+
+
 
         this.scene.renderLayer(this.gl, Renderer.LAYER_STAND,this.standShader);
 

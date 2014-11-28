@@ -8,7 +8,7 @@ varying mediump vec2 vTexCoord;
 varying vec3 vNormalInterp;
 varying vec3 vVertPos;
 
-const vec3 lightPos = vec3(2.0,2.0,0.0);
+uniform vec3 uLightPos;
 const vec3 diffuseColor = vec3(0.2, 0.2, 0.2);
 const vec3 specColor = vec3(1.0, 1.0, 1.0);
 
@@ -16,7 +16,7 @@ void main(void) {
     //gl_FragColor = vColor;//texture2D(uTextureUnit,vTexCoord);
 
   vec3 normal = normalize(vNormalInterp);
-  vec3 lightDir = normalize(lightPos - vVertPos);
+  vec3 lightDir = normalize(uLightPos - vVertPos);
 
   float lambertian = max(dot(lightDir,normal), 0.0);
   float specular = 0.0;
