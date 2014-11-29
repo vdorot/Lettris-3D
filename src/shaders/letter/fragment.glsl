@@ -1,9 +1,9 @@
-precision lowp float;
+precision mediump float;
 
 uniform sampler2D uTextureUnit;
 
 varying lowp vec3 vColor;
-varying mediump vec2 vTextureCoord;
+varying mediump vec2 vTexCoord;
 
 varying vec3 vNormalInterp;
 varying vec3 vVertPos;
@@ -34,5 +34,5 @@ void main(void) {
   vec4 colorFinal;
   colorFinal = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0);
     
-  gl_FragColor = colorFinal ;//* texture2D(uTextureUnit,vTextureCoord);
+  gl_FragColor = colorFinal * 0.5 * texture2D(uTextureUnit,vTexCoord);
 }

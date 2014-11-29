@@ -12,9 +12,6 @@ define(['./mesh','glMatrix','../../textures/marble'], function(Mesh, glM, Marble
         Mesh.call(this);
         this.letter = letter;
 
-        this.highlighted = false;
-        this.selected = false;
-
         this.color = new Float32Array([0.0,0.0,0.0]);
 
     };

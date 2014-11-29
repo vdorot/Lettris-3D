@@ -13,7 +13,7 @@ uniform lowp float uSelected;
 uniform lowp float uHighlighted;
 
 varying lowp vec3 vColor;
-varying mediump vec2 vTextureCoord;
+varying mediump vec2 vTexCoord;
 
 varying vec3 vNormalInterp;
 varying vec3 vVertPos;
@@ -53,7 +53,7 @@ void main(void) {
 
     vColor = faceColor + 0.0*aVertexNormal; //prevent aVertexNormal from being optimised away
 
-    vTextureCoord = aVertexUV;
+    vTexCoord = aVertexUV;
 
     vec4 vertPos4 = uModelMatrix * vec4(aVertexPosition, 1.0);
     vVertPos = vec3(vertPos4) / vertPos4.w;

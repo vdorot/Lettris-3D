@@ -112,7 +112,7 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/wood'], fun
 
         var hue = 'z'.charCodeAt(0) - this.letter.charCodeAt(0) / ('z'.charCodeAt(0) - 'a'.charCodeAt(0));
 
-        var rgbColor = HSVtoRGB(hue,0.4,0.55);
+        var rgbColor = HSVtoRGB(hue,0.6,0.65);
         this.color = new Float32Array([rgbColor.r, rgbColor.g, rgbColor.b]);
 
     };
@@ -145,9 +145,7 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/wood'], fun
         }
         this.selected = !!set;
     };
-
-
-    Letter.prototype.texture = new WoodTexture();
+   
 
     Letter.prototype.models = letters;
 
@@ -185,6 +183,8 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/wood'], fun
         textureUnit: 'uTextureUnit',
         color: 'uColor'
     };
+
+    Letter.prototype.texture = new WoodTexture();
 
  /**
      * Render mesh
