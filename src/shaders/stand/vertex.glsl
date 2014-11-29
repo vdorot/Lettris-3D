@@ -22,9 +22,9 @@ void main(void) {
 
     lowp vec3 faceColor;
 
-    faceColor = uColor + 0.0*aVertexNormal; //prevent aVertexNormal from being optimised away
+    faceColor = uColor + 0.0*aVertexNormal + 0.0*aVertexSide; //prevent aVertexNormal from being optimised away
 
-    vColor = faceColor + (aVertexSide * 0.0);
+    vColor = faceColor;
 
     vTexCoord = aVertexUV;
 

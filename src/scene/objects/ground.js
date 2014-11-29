@@ -15,7 +15,7 @@ define(['./mesh','glMatrix','../../textures/marble'], function(Mesh, glM, Marble
         this.highlighted = false;
         this.selected = false;
 
-        this.color = new Float32Array([0.5,0.6,0.8]);
+        this.color = new Float32Array([0.0,0.0,0.0]);
 
     };
 
@@ -46,8 +46,8 @@ define(['./mesh','glMatrix','../../textures/marble'], function(Mesh, glM, Marble
     ];
 
     Ground.prototype.sides = [
-        0.15,
-        0.15,
+        0,
+        0,
         0,
         0
     ];

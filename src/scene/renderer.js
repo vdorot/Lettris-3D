@@ -22,7 +22,7 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
 
         this.letterShader = new ShaderProgram(gl, new LetterVertex(), new LetterFragment());
 
-        this.standShader = new ShaderProgram(gl, new StandVertex(), new LetterFragment());
+        this.standShader = new ShaderProgram(gl, new StandVertex(), new StandFragment());
 
         this.glassShader = new ShaderProgram(gl, new GlassVertex(), new GlassFragment());
 

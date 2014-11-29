@@ -9,7 +9,6 @@ varying vec3 vNormalInterp;
 varying vec3 vVertPos;
 
 uniform vec3 uLightPos;
-
 const vec3 diffuseColor = vec3(0.2, 0.2, 0.2);
 const vec3 specColor = vec3(1.0, 1.0, 1.0);
 
@@ -33,5 +32,13 @@ void main(void) {
   
   }
 
-  gl_FragColor = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0);
+  vec4 colorFinal;
+  colorFinal = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0);
+
+  if( vColor[0] == 0.0 ){
+    gl_FragColor = colorFinal * texture2D(uTextureUnit,vTexCoord);
+  }
+  else {
+    gl_FragColor = colorFinal;
+  }
 }

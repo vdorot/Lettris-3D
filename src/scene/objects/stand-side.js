@@ -12,6 +12,8 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
     var StandSide = function(){
         Mesh.call(this);
 
+        this.color = new Float32Array([0.9,0.9,1.0]);
+
     };
 
     StandSide.prototype = Object.create(Mesh.prototype); // Extending Mesh class
@@ -41,7 +43,8 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
 
     StandSide.prototype.uniforms = {
         modelMatrix: 'uModelMatrix',
-        textureUnit: 'uTextureUnit'
+        textureUnit: 'uTextureUnit',
+        color: 'uColor'
     };
 
 
@@ -114,11 +117,10 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
 
         //setting uniforms
         var modelMatrixLoc = shaderProgram.getUniformLocation(this.uniforms.modelMatrix);        
-
-
         gl.uniformMatrix4fv(modelMatrixLoc, false, this.getMatrix());
 
-
+        var colorLoc = shaderProgram.getUniformLocation(this.uniforms.color);
+        gl.uniform3fv(colorLoc,this.color);
 
     
         gl.drawArrays(gl.TRIANGLES, 0, this.model.vertices.length / 3);

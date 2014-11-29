@@ -61,7 +61,7 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
     var Stand = function(){
         Mesh.call(this);
 
-        this.color = new Float32Array([0.7,0.3,0.3]);
+        this.color = new Float32Array([0.6,0.6,0.65]);
     };
 
     Stand.prototype = Object.create(Mesh.prototype); // Extending Mesh class
