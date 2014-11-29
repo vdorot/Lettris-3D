@@ -113,7 +113,6 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         gl.uniform2fv(resolutionLoc, new Float32Array([this.viewportWidth, this.viewportHeight]));
 
         var lightPosLoc = this.letterShader.getUniformLocation("uLightPos");
-        console.log(lightPosLoc);
         gl.uniform3fv(lightPosLoc, lightPos);
 
 
@@ -145,6 +144,21 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
 
 
         this.glassShader.use();
+
+
+
+
+        uniformLoc = this.glassShader.getUniformLocation("uProjectionMatrix");
+        
+        gl.uniformMatrix4fv(uniformLoc, false, perspectiveMatrix); // modify uniform 4x4 matrix
+
+        resolutionLoc = this.glassShader.getUniformLocation("uRes");
+
+        gl.uniform2fv(resolutionLoc, new Float32Array([this.viewportWidth, this.viewportHeight]));
+
+        lightPosLoc = this.glassShader.getUniformLocation("uLightPos");
+        gl.uniform3fv(lightPosLoc, lightPos);
+
         
         var transparentObjects = this.scene.getObjectsByLayer(Renderer.LAYER_GLASS);
 
@@ -168,7 +182,7 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
 
         for(var i in transparentObjects){
             var obj = transparentObjects[i];
-            obj.render(this.gl, this.standShader);
+            obj.render(this.gl, this.glassShader);
         }
 
     };
