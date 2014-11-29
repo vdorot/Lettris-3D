@@ -26,7 +26,7 @@ void main(void) {
     lowp vec3 faceColor;
 
     if(aVertexSide == 0.0){ //side of letter
-        faceColor = vec3(uColor[0]*0.9,uColor[1]*0.9,uColor[2]*0.9);
+        faceColor = vec3(uColor[0]*0.8,uColor[1]*0.8,uColor[2]*0.8);
     }
     else{
     	faceColor = vec3(uColor[0],uColor[1],uColor[2]);

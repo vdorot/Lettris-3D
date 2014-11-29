@@ -10,7 +10,7 @@ varying vec3 vVertPos;
 
 uniform vec3 uLightPos;
 const vec3 diffuseColor = vec3(0.2, 0.2, 0.2);
-const vec3 specColor = vec3(1.0, 1.0, 1.0);
+const vec3 specColor = vec3(0.85, 0.85, 0.85);
 
 void main(void) {
 
@@ -34,5 +34,5 @@ void main(void) {
   vec4 colorFinal;
   colorFinal = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0);
     
-  gl_FragColor = colorFinal * 0.5 * texture2D(uTextureUnit,vTexCoord);
+  gl_FragColor = colorFinal * texture2D(uTextureUnit,vTexCoord);
 }
