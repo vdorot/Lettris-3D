@@ -112,7 +112,7 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/wood'], fun
 
         var hue = 'z'.charCodeAt(0) - this.letter.charCodeAt(0) / ('z'.charCodeAt(0) - 'a'.charCodeAt(0));
 
-        var rgbColor = HSVtoRGB(hue,1.0,1);
+        var rgbColor = HSVtoRGB(hue,0.4,0.55);
         this.color = new Float32Array([rgbColor.r, rgbColor.g, rgbColor.b]);
 
     };
