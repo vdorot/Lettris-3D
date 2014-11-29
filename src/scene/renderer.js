@@ -1,7 +1,7 @@
 
 
-define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../shaders/letter/fragment','../shaders/stand/vertex','../shaders/stand/fragment'],
- function(glM,      ShaderProgram, LetterVertex, LetterFragment, StandVertex, StandFragment) {
+define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../shaders/letter/fragment','../shaders/stand/vertex','../shaders/stand/fragment', '../shaders/glass/vertex','../shaders/glass/fragment'],
+ function(glM,      ShaderProgram, LetterVertex, LetterFragment, StandVertex, StandFragment, GlassVertex, GlassFragment) {
 
 
     /**
@@ -23,6 +23,8 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         this.letterShader = new ShaderProgram(gl, new LetterVertex(), new LetterFragment());
 
         this.standShader = new ShaderProgram(gl, new StandVertex(), new LetterFragment());
+
+        this.glassShader = new ShaderProgram(gl, new GlassVertex(), new GlassFragment());
 
     };
 
@@ -142,7 +144,7 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         this.scene.renderLayer(this.gl, Renderer.LAYER_STAND,this.standShader);
 
 
-        //TODO: this.glassShader.use();
+        this.glassShader.use();
         
         var transparentObjects = this.scene.getObjectsByLayer(Renderer.LAYER_GLASS);
 
