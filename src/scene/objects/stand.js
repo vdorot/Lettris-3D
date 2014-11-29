@@ -2,7 +2,7 @@
  * @module scene/models
  */
 
-define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], function(Mesh, glM, Models, MarbleTexture) {
+define(['./mesh','glMatrix','../../../models/models','../../textures/quartz'], function(Mesh, glM, Models, QuartzTexture) {
 
   function mat4Transpose(a, transposed) {
     var t = 0;
@@ -61,7 +61,7 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
     var Stand = function(){
         Mesh.call(this);
 
-        this.color = new Float32Array([0.6,0.6,0.65]);
+        this.color = new Float32Array([0.6,0.6,1.0]);
     };
 
     Stand.prototype = Object.create(Mesh.prototype); // Extending Mesh class
@@ -71,15 +71,12 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
 
     console.log(Models.stand);
 
-    Stand.prototype.texture = new MarbleTexture();
+    Stand.prototype.texture = new QuartzTexture();
 
 
     Stand.prototype.isPhysicsEnabled = function(){
         return false;
     };
-
-
-
 
     Stand.prototype.attributes = {
         vertex: 'aVertexPosition',
@@ -103,20 +100,14 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
      */
     Stand.prototype.render = function(gl, shaderProgram){
 
-
-
-
-
         //preparing vertex buffer
         var vertexBuffer = this.getBuffer(gl,'stand_vertex',this.model.vertices);
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 
-        var vertexAttribute = shaderProgram.getAttribLocation(this.attributes.vertex);        
-        
+        var vertexAttribute = shaderProgram.getAttribLocation(this.attributes.vertex);               
         gl.enableVertexAttribArray(vertexAttribute);
 
         gl.vertexAttribPointer(vertexAttribute, 3, gl.FLOAT, false, 0, 0);
-
 
         //preparing normal Buffer
         var normalBuffer = this.getBuffer(gl,'stand_normal',this.model.normals);
@@ -127,7 +118,6 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
         gl.enableVertexAttribArray(normalAttribute);       
         gl.vertexAttribPointer(normalAttribute, 3, gl.FLOAT, false, 0, 0);
 
-
         //preparing uv Buffer
         var uvBuffer = this.getBuffer(gl,'stand_uv',this.model.uvs);
         gl.bindBuffer(gl.ARRAY_BUFFER, uvBuffer);
@@ -136,7 +126,6 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
 
         gl.enableVertexAttribArray(uvAttribute);       
         gl.vertexAttribPointer(uvAttribute, 2, gl.FLOAT, false, 0, 0);
-
 
         //preparing side Buffer (front of Stand =1, back =-1, sides =0)
         var sideBuffer = this.getBuffer(gl,'stand_side',this.model.sides);
@@ -147,21 +136,13 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
         gl.enableVertexAttribArray(sideAttribute);       
         gl.vertexAttribPointer(sideAttribute, 1, gl.FLOAT, false, 0, 0);
 
-
-
         //set up texture        
-        
-
-
         var texHandle = this.texture.getHandle(gl); //this.texture gets texture from prototype - it is shared among instances
-        gl.activeTexture(gl.TEXTURE0); //texture unit 0
+        gl.activeTexture(gl.TEXTURE2); //texture unit 2
         gl.bindTexture(gl.TEXTURE_2D, texHandle);
 
         var textureUnitLoc = shaderProgram.getUniformLocation(this.uniforms.textureUnit);
-        gl.uniform1i(textureUnitLoc, 0); //texture unit 0      
-
-
-
+        gl.uniform1i(textureUnitLoc, 2); //texture unit 2      
 
         //setting uniforms
         var modelMatrixLoc = shaderProgram.getUniformLocation(this.uniforms.modelMatrix);        

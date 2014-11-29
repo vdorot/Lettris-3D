@@ -2,7 +2,7 @@
  * @module scene/models
  */
 
-define(['./mesh','glMatrix','../../../models/models'], function(Mesh, glM, letters) {
+define(['./mesh','glMatrix','../../../models/models','../../textures/wood'], function(Mesh, glM, letters, WoodTexture) {
 
 
      function mat4Transpose(a, transposed) {
@@ -112,7 +112,7 @@ define(['./mesh','glMatrix','../../../models/models'], function(Mesh, glM, lette
 
         var hue = 'z'.charCodeAt(0) - this.letter.charCodeAt(0) / ('z'.charCodeAt(0) - 'a'.charCodeAt(0));
 
-        var rgbColor = HSVtoRGB(hue,0.4,1);
+        var rgbColor = HSVtoRGB(hue,1.0,1);
         this.color = new Float32Array([rgbColor.r, rgbColor.g, rgbColor.b]);
 
     };
@@ -147,6 +147,7 @@ define(['./mesh','glMatrix','../../../models/models'], function(Mesh, glM, lette
     };
 
 
+    Letter.prototype.texture = new WoodTexture();
 
     Letter.prototype.models = letters;
 
@@ -181,6 +182,7 @@ define(['./mesh','glMatrix','../../../models/models'], function(Mesh, glM, lette
         normalMatrix: 'uNormalMatrix',
         selected: 'uSelected',
         highlighted: 'uHighlighted',
+        textureUnit: 'uTextureUnit',
         color: 'uColor'
     };
 
@@ -232,7 +234,13 @@ define(['./mesh','glMatrix','../../../models/models'], function(Mesh, glM, lette
         gl.enableVertexAttribArray(sideAttribute);       
         gl.vertexAttribPointer(sideAttribute, 1, gl.FLOAT, false, 0, 0);
 
+        //set up texture        
+        var texHandle = this.texture.getHandle(gl); //this.texture gets texture from prototype - it is shared among instances
+        gl.activeTexture(gl.TEXTURE1); //texture unit 1
+        gl.bindTexture(gl.TEXTURE_2D, texHandle);
 
+        var textureUnitLoc = shaderProgram.getUniformLocation(this.uniforms.textureUnit);
+        gl.uniform1i(textureUnitLoc, 1); //texture unit 1   
 
         //setting uniforms
         var modelMatrixLoc = shaderProgram.getUniformLocation(this.uniforms.modelMatrix);        

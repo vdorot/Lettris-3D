@@ -19,11 +19,7 @@ void main(void) {
 
     gl_Position = uProjectionMatrix * uModelMatrix * vec4(aVertexPosition, 1.0);
 
-    lowp vec3 faceColor;
-
-    faceColor = uColor + 0.0*aVertexNormal + 0.0*aVertexSide; //prevent aVertexNormal from being optimised away
-
-    vColor = vec3(0.0,0.5,0.0);//faceColor;
+    vColor = uColor + 0.0*aVertexNormal + 0.0*aVertexSide; //prevent aVertexNormal from being optimised away
 
     vTexCoord = aVertexUV;
 

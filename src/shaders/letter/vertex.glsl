@@ -51,9 +51,7 @@ void main(void) {
         }
     }
 
-    faceColor = faceColor + 0.0*aVertexNormal; //prevent aVertexNormal from being optimised away
-
-    vColor = faceColor;
+    vColor = faceColor + 0.0*aVertexNormal; //prevent aVertexNormal from being optimised away
 
     vTextureCoord = aVertexUV;
 

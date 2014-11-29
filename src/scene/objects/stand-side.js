@@ -12,7 +12,7 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
     var StandSide = function(){
         Mesh.call(this);
 
-        this.color = new Float32Array([0.9,0.9,1.0]);
+        this.color = new Float32Array([0.9,1.0,1.0]);
 
     };
 

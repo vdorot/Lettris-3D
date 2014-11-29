@@ -12,8 +12,7 @@ uniform vec3 uLightPos;
 const vec3 diffuseColor = vec3(0.2, 0.2, 0.2);
 const vec3 specColor = vec3(1.0, 1.0, 1.0);
 
-void main(void) {
-  
+void main(void) {  
 
   vec3 normal = normalize(vNormalInterp);
   vec3 lightDir = normalize(uLightPos - vVertPos);
@@ -31,8 +30,8 @@ void main(void) {
     specular = pow(specAngle, 16.0);
   
   }
-  gl_FragColor = vec4(vColor,1.0);
-  //gl_FragColor = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0);
+  //gl_FragColor = vec4(vColor,1.0);
+  gl_FragColor = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0);
 
 
 }

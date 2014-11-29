@@ -31,5 +31,8 @@ void main(void) {
   
   }
 
-  gl_FragColor = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0);
+  vec4 colorFinal;
+  colorFinal = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0);
+    
+  gl_FragColor = colorFinal * texture2D(uTextureUnit,vTexCoord);
 }
