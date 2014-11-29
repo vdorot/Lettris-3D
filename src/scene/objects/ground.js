@@ -15,6 +15,7 @@ define(['./mesh','glMatrix','../../textures/marble'], function(Mesh, glM, Marble
         this.highlighted = false;
         this.selected = false;
 
+        this.color = new Float32Array([0.5,0.6,0.8]);
 
     };
 
@@ -62,7 +63,8 @@ define(['./mesh','glMatrix','../../textures/marble'], function(Mesh, glM, Marble
 
     Ground.prototype.uniforms = {
         modelMatrix: 'uModelMatrix',
-        textureUnit: 'uTextureUnit'
+        textureUnit: 'uTextureUnit',
+        color: 'uColor'
     };
 
     Ground.prototype.texture = new MarbleTexture();
@@ -136,10 +138,10 @@ define(['./mesh','glMatrix','../../textures/marble'], function(Mesh, glM, Marble
 
         //setting uniforms
         var modelMatrixLoc = shaderProgram.getUniformLocation(this.uniforms.modelMatrix);        
-
-
         gl.uniformMatrix4fv(modelMatrixLoc, false, this.getMatrix());
 
+        var colorLoc = shaderProgram.getUniformLocation(this.uniforms.color);
+        gl.uniform3fv(colorLoc,this.color);
 
 
     

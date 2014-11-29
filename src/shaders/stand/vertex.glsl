@@ -7,6 +7,7 @@ attribute lowp float aVertexSide;
 uniform mat4 uModelMatrix;
 uniform mat4 uProjectionMatrix;
 uniform mat4 uNormalMatrix;
+uniform lowp vec3 uColor;
 
 varying lowp vec3 vColor;
 varying highp vec2 vTexCoord;
@@ -21,15 +22,9 @@ void main(void) {
 
     lowp vec3 faceColor;
 
-    if(aVertexSide == 0.0){ //side
-    	faceColor = vec3(0.8,0.8,0.9);
-    }else{
-    	faceColor = vec3(0.7,0.7,0.8);
-    }
+    faceColor = uColor + 0.0*aVertexNormal; //prevent aVertexNormal from being optimised away
 
-    faceColor = faceColor + 0.0*aVertexNormal; //prevent aVertexNormal from being optimised away
-
-    vColor = faceColor;
+    vColor = faceColor + (aVertexSide * 0.0);
 
     vTexCoord = aVertexUV;
 

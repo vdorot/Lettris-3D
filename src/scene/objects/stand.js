@@ -61,6 +61,7 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
     var Stand = function(){
         Mesh.call(this);
 
+        this.color = new Float32Array([0.7,0.3,0.3]);
     };
 
     Stand.prototype = Object.create(Mesh.prototype); // Extending Mesh class
@@ -90,7 +91,8 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
     Stand.prototype.uniforms = {
         modelMatrix: 'uModelMatrix',
         textureUnit: 'uTextureUnit',
-        normalMatrix: 'uNormalMatrix'
+        normalMatrix: 'uNormalMatrix',
+        color: 'uColor'
     };
 
 
@@ -163,9 +165,11 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
 
         //setting uniforms
         var modelMatrixLoc = shaderProgram.getUniformLocation(this.uniforms.modelMatrix);        
-
         gl.uniformMatrix4fv(modelMatrixLoc, false, this.getMatrix());
    
+        var colorLoc = shaderProgram.getUniformLocation(this.uniforms.color);
+        gl.uniform3fv(colorLoc,this.color);
+
         gl.drawArrays(gl.TRIANGLES, 0, this.model.vertices.length / 3);
 
         var normalMatrixLoc = shaderProgram.getUniformLocation(this.uniforms.normalMatrix);
@@ -174,8 +178,6 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
         mat4Invert(this.getMatrix(), modelMatrixInv);
         mat4Transpose(modelMatrixInv, normalMatrix);
         gl.uniformMatrix4fv(normalMatrixLoc, false, normalMatrix);
-
-
 
     };
 
