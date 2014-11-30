@@ -36,7 +36,7 @@ void main(void) {
      colorFinal = vec4(vColor + lambertian * vec3(0.2, 0.2, 0.2) + specular * specColor, 1.0) * textureColor;
   }
   else {
-    vec3 texture_colored = vec3(textureColor[0], textureColor[1],textureColor[2]);
+    vec3 texture_colored = vec3(textureColor[0], textureColor[1],textureColor[2]) * vColor;
     colorFinal = vec4(texture_colored + lambertian * vec3(0.35, 0.35, 0.35) + specular * specColor, 1.0);
   }
   

@@ -35,10 +35,10 @@ void main(void) {
 
     if(uHighlighted == 1.0){
         if(aVertexSide == 0.0){ //side of letter
-            faceColor = vec3(uColor[0]*0.25,uColor[1]*0.25,uColor[2]*0.25);
+            faceColor = vec3(uColor[0]*0.35,uColor[1]*0.35,uColor[2]*0.35);
         }
         else{
-            faceColor = vec3(uColor[0]*0.21,uColor[1]*0.21,uColor[2]*0.21);
+            faceColor = vec3(uColor[0]*0.31,uColor[1]*0.31,uColor[2]*0.31);
         }
     }
 
