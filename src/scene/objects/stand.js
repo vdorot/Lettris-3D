@@ -65,12 +65,11 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/quartz'], f
     };
 
     Stand.prototype = Object.create(Mesh.prototype); // Extending Mesh class
+
     Stand.prototype.constructor = Mesh;
 
     Stand.prototype.model = Models.stand;
-
-    console.log(Models.stand);
-
+    
     Stand.prototype.texture = new QuartzTexture();
 
 

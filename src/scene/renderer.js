@@ -181,8 +181,13 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         //sort objects by screencoords.z // using transparentObjects = transparentObjects.sort(comparatorFunction); //http://www.w3schools.com/jsref/jsref_sort.asp
 
         for(var i in transparentObjects){
-            var obj = transparentObjects[i];
-            obj.render(this.gl, this.glassShader);
+            var object = transparentObjects[i];
+            object.render(this.gl, this.glassShader);
+
+            objMatrix =  object.getMatrix();
+            resultMatrix = perspectiveMatrix * objMatrix;
+
+            console.log(object.verticles[0]);
         }
 
     };

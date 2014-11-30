@@ -17,15 +17,14 @@ define(['./mesh','glMatrix','../../../models/models','../../textures/marble'], f
     };
 
     StandSide.prototype = Object.create(Mesh.prototype); // Extending Mesh class
+    
     StandSide.prototype.constructor = Mesh;
 
     StandSide.prototype.model = Models.stand.side;
 
-    console.log(Models.stand);
-
+    //console.log(Models.stand);
 
     StandSide.prototype.texture = new MarbleTexture();
-
 
     StandSide.prototype.isPhysicsEnabled = function(){
         return false;

@@ -21,10 +21,10 @@ define(['./mesh','glMatrix','../../textures/marble'], function(Mesh, glM, Marble
 
 
     Ground.prototype.vertices = [
-    -50, 0.0,  -50.0,
-     50.0, 0.0,  -50.0,
-     50.0, 0.0,  50.0,
-    -50.0, 0.0,  50.0
+    -100, 0.0,  -100.0,
+     100.0, 0.0,  -100.0,
+     100.0, 0.0,  100.0,
+    -100.0, 0.0,  100.0
   ];
 
 
