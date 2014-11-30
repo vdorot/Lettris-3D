@@ -56,6 +56,8 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         //gl.clearColor(0.3, 0.3, 0.3, 1.0);                      // Set clear color to black, fully opaque
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);      // Clear the color as well as the depth buffer.
 
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
         var cameraPosition = [0,5,4];
         var lightPosition = [2,4,2];
@@ -102,8 +104,6 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
 
         this.letterShader.use();
 
-
-
         var uniformLoc = this.letterShader.getUniformLocation("uProjectionMatrix");
         
         gl.uniformMatrix4fv(uniformLoc, false, perspectiveMatrix); // modify uniform 4x4 matrix
@@ -113,14 +113,10 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         gl.uniform2fv(resolutionLoc, new Float32Array([this.viewportWidth, this.viewportHeight]));
 
         var lightPosLoc = this.letterShader.getUniformLocation("uLightPos");
+
         gl.uniform3fv(lightPosLoc, lightPos);
 
-
-
-
-
         this.scene.renderLayer(this.gl, Renderer.LAYER_LETTERS,this.letterShader);
-
 
 
 
@@ -135,18 +131,14 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         gl.uniform2fv(resolutionLoc, new Float32Array([this.viewportWidth, this.viewportHeight]));
 
         lightPosLoc = this.standShader.getUniformLocation("uLightPos");
+
         gl.uniform3fv(lightPosLoc, lightPos);
-
-
-
 
         this.scene.renderLayer(this.gl, Renderer.LAYER_STAND,this.standShader);
 
 
+ 
         this.glassShader.use();
-
-
-
 
         uniformLoc = this.glassShader.getUniformLocation("uProjectionMatrix");
         
