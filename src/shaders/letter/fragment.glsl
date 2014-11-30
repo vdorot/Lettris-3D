@@ -30,9 +30,8 @@ void main(void) {
     specular = pow(specAngle, 16.0);
   
   }
-
-  vec4 colorFinal;
-  colorFinal = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0);
-    
-  gl_FragColor = colorFinal * texture2D(uTextureUnit,vTexCoord);
+  vec4 textureColor = texture2D(uTextureUnit,vTexCoord);
+  vec3 vColor2 = vec3(vColor[0] * textureColor[0], vColor[1] * textureColor[1], vColor[2] * textureColor[2]);
+  
+  gl_FragColor = vec4(vColor2 + lambertian * diffuseColor + specular * specColor, 1.0);
 }
