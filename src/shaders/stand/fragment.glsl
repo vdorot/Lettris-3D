@@ -30,10 +30,17 @@ void main(void) {
     specular = pow(specAngle, 16.0);
   
   }
-
+  
   vec4 colorFinal;
-  colorFinal = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0);
+  if (vColor[0] == 0.0){
+     colorFinal = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0) * texture2D(uTextureUnit,vTexCoord);
+  }
+  else {
+    vec3 texture_colored = vec3(texture2D(uTextureUnit,vTexCoord)[0], texture2D(uTextureUnit,vTexCoord)[1],texture2D(uTextureUnit,vTexCoord)[2]);
+    colorFinal = vec4(texture_colored + lambertian * diffuseColor + specular * specColor, 1.0);
+  }
+  
     
-  gl_FragColor = colorFinal * texture2D(uTextureUnit,vTexCoord);
+  gl_FragColor = colorFinal;
 
 }

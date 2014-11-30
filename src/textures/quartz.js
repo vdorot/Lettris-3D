@@ -2,7 +2,7 @@
  * @module textures
  */
 
-define(['./texture','image!../../textures/quartz2.jpg!rel'], function(Texture, image) {
+define(['./texture','image!../../textures/quartz.jpg!rel'], function(Texture, image) {
 
 
 
