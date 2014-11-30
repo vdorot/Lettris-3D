@@ -187,7 +187,7 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
             objMatrix =  object.getMatrix();
             resultMatrix = perspectiveMatrix * objMatrix;
 
-            console.log(object.verticles[0]);
+            console.log(object.model.vertices[0]);
         }
 
     };

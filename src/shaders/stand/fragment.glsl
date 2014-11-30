@@ -31,12 +31,13 @@ void main(void) {
   
   }
   
+  vec4 textureColor = texture2D(uTextureUnit,vTexCoord);
   vec4 colorFinal;
   if (vColor[0] == 0.0){
-     colorFinal = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0) * texture2D(uTextureUnit,vTexCoord);
+     colorFinal = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0) * textureColor;
   }
   else {
-    vec3 texture_colored = vec3(texture2D(uTextureUnit,vTexCoord)[0], texture2D(uTextureUnit,vTexCoord)[1],texture2D(uTextureUnit,vTexCoord)[2]);
+    vec3 texture_colored = vec3(textureColor[0], textureColor[1],textureColor[2]);
     colorFinal = vec4(texture_colored + lambertian * diffuseColor + specular * specColor, 1.0);
   }
   
