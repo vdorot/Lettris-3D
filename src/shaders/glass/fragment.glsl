@@ -31,7 +31,8 @@ void main(void) {
   
   }
   //gl_FragColor = vec4(vColor,1.0);
-  gl_FragColor = vec4(vColor + lambertian * diffuseColor + specular * specColor, 0.5);
+
+  gl_FragColor = vec4(vColor + lambertian * diffuseColor + specular * specColor, 0.3);
 
 
 }

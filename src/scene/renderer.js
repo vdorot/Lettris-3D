@@ -180,15 +180,35 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
         //
         //sort objects by screencoords.z // using transparentObjects = transparentObjects.sort(comparatorFunction); //http://www.w3schools.com/jsref/jsref_sort.asp
 
+
+
         for(var i in transparentObjects){
-            var object = transparentObjects[i];
-            object.render(this.gl, this.glassShader);
+            var obj = transparentObjects[i];
+            //obj.render(this.gl, this.glassShader);
 
-            objMatrix =  object.getMatrix();
-            resultMatrix = perspectiveMatrix * objMatrix;
+            var pt = glM.vec3.fromValues(obj.model.vertices[0],obj.model.vertices[1],obj.model.vertices[2]);
 
-            console.log(object.model.vertices[0]);
+            glM.vec3.transformMat4(pt,pt,obj.getMatrix());
+
+            glM.vec3.transformMat4(pt,pt,perspectiveMatrix);
+
+            obj._sort_z = pt[2];
+
         }
+
+        transparentObjects = transparentObjects.sort(function(a,b){ return b._sort_z - a._sort_z;});
+
+        gl.enable(gl.BLEND);
+
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+        for(var i in transparentObjects){
+            var obj = transparentObjects[i];
+
+            obj.render(this.gl, this.glassShader);
+        }
+
+        gl.disable(gl.BLEND);
 
     };
 
