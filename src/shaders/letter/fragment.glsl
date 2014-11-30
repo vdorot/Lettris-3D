@@ -1,4 +1,4 @@
-precision lowp float;
+precision mediump float;
 
 uniform sampler2D uTextureUnit;
 
@@ -10,7 +10,7 @@ varying vec3 vVertPos;
 
 uniform vec3 uLightPos;
 const vec3 diffuseColor = vec3(0.2, 0.2, 0.2);
-const vec3 specColor = vec3(1.0, 1.0, 1.0);
+const vec3 specColor = vec3(0.85, 0.85, 0.85);
 
 void main(void) {
 

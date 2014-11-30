@@ -13,7 +13,7 @@ uniform lowp float uSelected;
 uniform lowp float uHighlighted;
 
 varying lowp vec3 vColor;
-varying mediump vec2 vTextureCoord;
+varying mediump vec2 vTexCoord;
 
 varying vec3 vNormalInterp;
 varying vec3 vVertPos;
@@ -26,7 +26,7 @@ void main(void) {
     lowp vec3 faceColor;
 
     if(aVertexSide == 0.0){ //side of letter
-        faceColor = vec3(uColor[0]*0.9,uColor[1]*0.9,uColor[2]*0.9);
+        faceColor = vec3(uColor[0]*0.8,uColor[1]*0.8,uColor[2]*0.8);
     }
     else{
     	faceColor = vec3(uColor[0],uColor[1],uColor[2]);
@@ -53,7 +53,7 @@ void main(void) {
 
     vColor = faceColor + 0.0*aVertexNormal; //prevent aVertexNormal from being optimised away
 
-    vTextureCoord = aVertexUV;
+    vTexCoord = aVertexUV;
 
     vec4 vertPos4 = uModelMatrix * vec4(aVertexPosition, 1.0);
     vVertPos = vec3(vertPos4) / vertPos4.w;
