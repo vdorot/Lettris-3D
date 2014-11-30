@@ -182,7 +182,7 @@ define(['glMatrix','../shaders/shader-program','../shaders/letter/vertex','../sh
 
         for(var i in transparentObjects){
             var obj = transparentObjects[i];
-            obj.render(this.gl, this.glassShader);
+            //obj.render(this.gl, this.glassShader);
         }
 
     };
