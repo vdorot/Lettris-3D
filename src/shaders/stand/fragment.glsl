@@ -9,7 +9,6 @@ varying vec3 vNormalInterp;
 varying vec3 vVertPos;
 
 uniform vec3 uLightPos;
-const vec3 diffuseColor = vec3(0.2, 0.2, 0.2);
 const vec3 specColor = vec3(1.0, 1.0, 1.0);
 
 void main(void) {
@@ -34,11 +33,11 @@ void main(void) {
   vec4 textureColor = texture2D(uTextureUnit,vTexCoord);
   vec4 colorFinal;
   if (vColor[0] == 0.0){
-     colorFinal = vec4(vColor + lambertian * diffuseColor + specular * specColor, 1.0) * textureColor;
+     colorFinal = vec4(vColor + lambertian * vec3(0.2, 0.2, 0.2) + specular * specColor, 1.0) * textureColor;
   }
   else {
     vec3 texture_colored = vec3(textureColor[0], textureColor[1],textureColor[2]);
-    colorFinal = vec4(texture_colored + lambertian * diffuseColor + specular * specColor, 1.0);
+    colorFinal = vec4(texture_colored + lambertian * vec3(0.35, 0.35, 0.35) + specular * specColor, 1.0);
   }
   
     
