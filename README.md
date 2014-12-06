@@ -6,7 +6,7 @@ Lettris 3D
 
 Viktor Dorotovič, Gabriel Lehocký, Tomáš Lengál
 
-Computer Graphics project at FIT BUT, 2014/2015
+PGR-Computer Graphics project at FIT BUT, 2014/2015
 
 Technology
 =========
