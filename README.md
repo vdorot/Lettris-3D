@@ -4,6 +4,8 @@ Lettris 3D
 
 [http://demo.dorotovic.name/lettris3d/](http://demo.dorotovic.name/lettris3d/)
 
+Viktor Dorotovič, Gabriel Lehocký, Tomáš Lengál
+
 Computer Graphics project at FIT BUT, 2014/2015
 
 Technology
