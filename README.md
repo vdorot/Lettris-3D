@@ -10,13 +10,13 @@ PGR-Computer Graphics project at FIT BUT, 2014/2015
 
 Technology
 =========
-[http://requirejs.org/](Require.js)
+[Require.js](http://requirejs.org/)
 
 Require.js plugins:
-- [https://github.com/millermedeiros/requirejs-plugins](image): loading textures
-- [http://github.com/requirejs/text](text): loading GLSL source as plaintext
+- [image](https://github.com/millermedeiros/requirejs-plugins): loading textures
+- [text](http://github.com/requirejs/text): loading GLSL source as plaintext
 
-[http://jquery.com/](jQuery)
+[jQuery](http://jquery.com/)
 
 WebGL
 
