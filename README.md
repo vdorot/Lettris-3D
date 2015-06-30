@@ -20,9 +20,9 @@ Require.js plugins:
 
 WebGL
 
-[http://glmatrix.net/](glMatrix): matrix and vector operations for WebGL
+[glMatrix](http://glmatrix.net/): matrix and vector operations for WebGL
 
-[https://github.com/kripken/ammo.js/](ammo.js): Bullet physics engine ported to asm.js via Emscripten
+[ammo.js](https://github.com/kripken/ammo.js/): Bullet physics engine ported to asm.js via Emscripten
 
 Web Workers: background thread for physics engine
 
