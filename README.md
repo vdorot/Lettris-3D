@@ -22,6 +22,8 @@ WebGL
 
 [glMatrix](http://glmatrix.net/): matrix and vector operations for WebGL
 
+[Blender](https://www.blender.org/): 3d models, [Three.js export](https://github.com/mrdoob/three.js/tree/master/utils/exporters/blender)
+
 [ammo.js](https://github.com/kripken/ammo.js/): Bullet physics engine ported to asm.js via Emscripten
 
 Web Workers: background thread for physics engine
