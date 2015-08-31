@@ -2,7 +2,7 @@
 Lettris 3D 
 ===========
 
-http://demo.dorotovic.name/lettris-3d/
+http://lettris.demo.dorotovic.name/
 
 Viktor Dorotovič, Gabriel Lehocký, Tomáš Lengál
 
